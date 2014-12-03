@@ -4,7 +4,7 @@ require 'net/http'
 
 # Client for TheGamesDB API (thegamesdb.net)
 module Gamesdb
-  @base_url = 'http://thegamesdb.net/api/'
+  BASE_URL = 'http://thegamesdb.net/api/'
 
   # Method for listing platform's games
   # http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
@@ -81,7 +81,7 @@ module Gamesdb
 
   # Api call and xml parsing
   def self.xml_response(url, params = {})
-    uri = URI(@base_url + url)
+    uri = URI(BASE_URL + url)
     uri.query = URI.encode_www_form(params)
     request = Net::HTTP.get_response(uri)
 
