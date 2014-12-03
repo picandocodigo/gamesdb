@@ -74,6 +74,21 @@ module Gamesdb
     url = 'GetGame.php'
     data = xml_response(url, id: id)
     game = data.nodes[0].Game
+    process_game(game)
+  end
+
+  private
+
+  # Api call and xml parsing
+  def self.xml_response(url, params = {})
+    uri = URI(@base_url + url)
+    uri.query = URI.encode_www_form(params)
+    request = Net::HTTP.get_response(uri)
+
+    Ox.parse(request.body)
+  end
+
+  def self.process_game(game)
     images = {}
     game.locate('Images/boxart').each do |a|
       images[a.attributes[:side].to_sym] = a.text
@@ -87,16 +102,5 @@ module Gamesdb
       # esrb: game.ESRB.text, rating: game.Rating.text,
       images: images
     }
-  end
-
-  private
-
-  # Api call and xml parsing
-  def self.xml_response(url, params = {})
-    uri = URI(@base_url + url)
-    uri.query = URI.encode_www_form(params)
-    request = Net::HTTP.get_response(uri)
-
-    Ox.parse(request.body)
   end
 end

@@ -69,7 +69,7 @@ http://wiki.thegamesdb.net/index.php?title=GetGame
 
 1. Fork it ( http://github.com/picandocodogio/gamesdb/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Write your tests
+3. Write your tests and run `rake test` (make sure they pass)
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
