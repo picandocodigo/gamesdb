@@ -91,7 +91,8 @@ module Gamesdb
   def self.process_game(game)
     images = {}
     game.locate('Images/boxart').each do |a|
-      images[a.attributes[:side].to_sym] = a.text
+      key = a.attributes[:side].to_sym
+      images[key] = a.text
     end
     {
       id: game.id.text.to_i, title: game.GameTitle.text,
