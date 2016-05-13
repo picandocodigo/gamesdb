@@ -20,6 +20,11 @@ Or install it yourself as:
 
 This is still a work in progress, but for now you can use:
 
+* [Get Platforms](#get-platforms)
+* [Get Platform Games](#get-platform-games)
+* [Get Game](#get-game)
+* [Get Game List](#get-game-list)
+
 ### Get Platforms
 http://wiki.thegamesdb.net/index.php?title=GetPlatformsList
 >The GetGamesList API search returns a listing of a listing of all platforms available on the site, sorted by alphabetical order of name.
@@ -64,6 +69,15 @@ http://wiki.thegamesdb.net/index.php?title=GetGame
 2.1.2 :006 > Gamesdb.game(109)
 => {:id=>109, :title=>"The Legend of Zelda: Twilight Princess", :release_date=>"11/19/2006", :platform=>"Nintendo Wii", :overview=>"In the next chapter in the Legend of Zelda series, Link can transform into a wolf to scour the darkened land of Hyrule. With the help of Midna, a mysterious being, you must guide Link through hordes of foul creatures and challenging bosses using new moves and a new horseback combat system. Many puzzles stand between Link and the fulfillment of his quest, so you must sharpen your wits as you hunt for weapons and items.", :publisher=>"Nintendo", :developer=>"Nintendo", :genres=>"Action, Adventure", :images=>{:back=>"boxart/original/back/109-1.jpg", :front=>"boxart/original/front/109-1.jpg"}}
 ```
+
+## Get Game List
+http://wiki.thegamesdb.net/index.php/GetGamesList
+>The GetGamesList API search returns a listing of games matched up with loose search terms.  *Note: We have implemented special character stripping and loose word order searching in an attempt to provide better matching and a return a greater number of relevant hits.*
+
+**Usage**
+
+* Parameters: name (String): search string.
+* Returns: Hash with game info:  `:id`, `:name` (not-unique), `:release_date`, `platform`
 
 ## Contributing
 
