@@ -77,6 +77,35 @@ module Gamesdb
     process_game(game)
   end
 
+  # The GetGamesList API search returns a listing of games matched up
+  # with loose search terms.
+  # http://wiki.thegamesdb.net/index.php/GetGamesList
+  #
+  # Parameters:
+  # - name (required)
+  # - TODO: platform (optional): filters results by platform (not implemented)
+  # - TODO: genre (optional): filters results by genre (not
+  # implemented)
+  #
+  # == Returns:
+  # Hash with game info:  id, name (not-unique), release_date,
+  # platform
+  #
+  def self.games_list(name)
+    url = 'GetGamesList.php'
+    data = xml_response(url, name: name)
+    games = []
+    data.Data.nodes.each do |node|
+      games << {
+        id: node.nodes[0].nodes.first,
+        name: node.nodes[1].nodes.first,
+        release_date: node.nodes[2].nodes.first,
+        platform: node.nodes[3].nodes.first
+      }
+    end
+    games
+  end
+
   private
 
   # Api call and xml parsing

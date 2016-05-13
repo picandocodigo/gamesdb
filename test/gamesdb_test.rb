@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'vcr'
 require 'minitest/spec'
 require 'minitest/autorun'
@@ -58,6 +61,22 @@ describe Gamesdb do
     it 'should have valid fields' do
       @game[:title].must_be_kind_of String
       @game[:title].length.wont_be :<, 0
+    end
+  end
+
+  describe 'games_list' do
+    before do
+      VCR.use_cassette('games_list') do
+        @games_list = Gamesdb.games_list('asterix')
+      end
+    end
+
+    it 'should return a list' do
+      @games_list.count.wont_be :<, 0
+      game = @games_list.first
+      game[:id].must_be_kind_of String
+      game[:name].must_be_kind_of String
+      game[:platform].must_be_kind_of String
     end
   end
 end
