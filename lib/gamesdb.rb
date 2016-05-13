@@ -94,16 +94,7 @@ module Gamesdb
   def self.games_list(name)
     url = 'GetGamesList.php'
     data = xml_response(url, name: name)
-    games = []
-    data.Data.nodes.each do |node|
-      games << {
-        id: node.nodes[0].nodes.first,
-        name: node.nodes[1].nodes.first,
-        release_date: node.nodes[2].nodes.first,
-        platform: node.nodes[3].nodes.first
-      }
-    end
-    games
+    build_games_list(data)
   end
 
   private
@@ -132,5 +123,18 @@ module Gamesdb
       # esrb: game.ESRB.text, rating: game.Rating.text,
       images: images
     }
+  end
+
+  def self.build_games_list(data)
+    games = []
+    data.Data.nodes.each do |node|
+      games << {
+        id: node.nodes[0].nodes.first,
+        name: node.nodes[1].nodes.first,
+        release_date: node.nodes[2].nodes.first,
+        platform: node.nodes[3].nodes.first
+      }
+    end
+    games
   end
 end

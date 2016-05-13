@@ -15,9 +15,12 @@ describe Gamesdb do
 
   describe 'platforms' do
     before do
-      VCR.use_cassette('platforms') do
-        @platforms = Gamesdb.platforms
-      end
+      VCR.insert_cassette('platforms')
+      @platforms = Gamesdb.platforms
+    end
+
+    after do
+      VCR.eject_cassette
     end
 
     it 'should get gaming platforms' do
@@ -35,10 +38,13 @@ describe Gamesdb do
 
   describe 'platform_games' do
     before do
-      VCR.use_cassette('platform_games') do
-        platforms = Gamesdb.platforms
-        @games = Gamesdb.platform_games(platforms[0][:id])
-      end
+      VCR.insert_cassette('platform_games')
+      platforms = Gamesdb.platforms
+      @games = Gamesdb.platform_games(platforms[0][:id])
+    end
+
+    after do
+      VCR.eject_cassette
     end
 
     it 'should return games in platform' do
@@ -48,9 +54,12 @@ describe Gamesdb do
 
   describe 'game' do
     before do
-      VCR.use_cassette('game') do
-        @game = Gamesdb.game(109)
-      end
+      VCR.insert_cassette('game')
+      @game = Gamesdb.game(109)
+    end
+
+    after do
+      VCR.eject_cassette
     end
 
     it 'should have a valid id' do
@@ -66,9 +75,12 @@ describe Gamesdb do
 
   describe 'games_list' do
     before do
-      VCR.use_cassette('games_list') do
-        @games_list = Gamesdb.games_list('asterix')
-      end
+      VCR.insert_cassette('games_list')
+      @games_list = Gamesdb.games_list('asterix')
+    end
+
+    after do
+      VCR.eject_cassette
     end
 
     it 'should return a list' do
