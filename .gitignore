@@ -17,3 +17,4 @@ test/version_tmp
 tmp
 test/fixtures/vcr_cassettes/*
 .byebug_history
+test/reports

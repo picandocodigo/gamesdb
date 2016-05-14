@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'vcr', '~> 2.9'
   spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'simplecov'
