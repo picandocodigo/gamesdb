@@ -91,4 +91,40 @@ describe Gamesdb do
       game[:platform].must_be_kind_of String
     end
   end
+
+  describe 'games art' do
+    before do
+      VCR.insert_cassette('game_art')
+      @images = Gamesdb.art("216")
+    end
+
+    after do
+      VCR.eject_cassette
+    end
+
+    it 'should return logo and boxart' do
+      @images[:boxart].count.wont_be :<, 0
+      @images[:logo].must_be_kind_of String
+      @images[:boxart][:front][:url].must_be_kind_of String
+      @images[:boxart][:front][:width].must_be_kind_of String
+      @images[:boxart][:front][:height].must_be_kind_of String
+      @images[:boxart][:front][:thumb].must_be_kind_of String
+    end
+
+    it 'should return screenshots' do
+      @images[:screenshots].count.wont_be :<, 0
+      @images[:screenshots].first[:url].must_be_kind_of String
+      @images[:screenshots].first[:width].must_be_kind_of String
+      @images[:screenshots].first[:height].must_be_kind_of String
+      @images[:screenshots].first[:thumb].must_be_kind_of String
+    end
+
+    it 'should return fanart' do
+      @images[:fanart].count.wont_be :<, 0
+      @images[:fanart].first[:url].must_be_kind_of String
+      @images[:fanart].first[:width].must_be_kind_of String
+      @images[:fanart].first[:height].must_be_kind_of String
+      @images[:fanart].first[:thumb].must_be_kind_of String
+    end
+  end
 end

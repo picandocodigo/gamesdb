@@ -5,6 +5,7 @@ require 'net/http'
 # Client for TheGamesDB API (thegamesdb.net)
 module Gamesdb
   BASE_URL = 'http://thegamesdb.net/api/'
+  IMAGES_BASE_URL = 'http://thegamesdb.net/banners/'
 
   # Method for listing platform's games
   # http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
@@ -97,6 +98,26 @@ module Gamesdb
     build_games_list(data)
   end
 
+  # This API feature returns a list of available artwork types and
+  # locations specific to the requested game id in the database. It
+  # also lists the resolution of any images available. Scrapers can be
+  # set to use a minimum or maximum resolution for specific images
+  # http://wiki.thegamesdb.net/index.php/GetArt
+  #
+  # Parameters
+  # - id - (integer) The numeric ID of the game in Gamesdb that you
+  # like to fetch artwork details for
+  #
+  # == Returns:
+  # Hash with game art info: fanart (array), boxart (Hash, :front,
+  # :back),  screenshots (array), fanart (array)
+  #
+  def self.art(id)
+    url = 'GetArt.php'
+    data = xml_response(url, id: id)
+    build_images(data.Data.Images)
+  end
+
   private
 
   # Api call and xml parsing
@@ -104,7 +125,6 @@ module Gamesdb
     uri = URI(BASE_URL + url)
     uri.query = URI.encode_www_form(params)
     request = Net::HTTP.get_response(uri)
-
     Ox.parse(request.body)
   end
 
@@ -137,4 +157,56 @@ module Gamesdb
     end
     games
   end
+
+  # Process the XML into a hash with screenshots, box art and fan art
+  # The URL's stored are the ones coming from the GamesDB, to access
+  # the images append Gamesdb::IMAGES_BASE_URL to the urls.
+  def self.build_images(data)
+    boxart = data.nodes.select { |a| a.value == "boxart" }
+    fanart = data.nodes.select { |a| a.value == "fanart" }
+    screenshots = data.nodes.select{ |s| s.value == "screenshot"}
+    images = {
+      logo: data.clearlogo.nodes[0],
+      boxart: build_boxart(boxart),
+      screenshots: images_from_nodes(screenshots),
+      fanart: images_from_nodes(fanart)
+    }
+    images
+  end
+
+  # Get the front and back box art into a Hash
+  def self.build_boxart(boxart)
+    front = boxart.select { |b| b.attributes[:side] == 'front' }[0]
+    back = boxart.pop
+    {
+      front: {
+        url: front.nodes[0],
+        width: front.attributes[:width],
+        height: front.attributes[:height],
+        thumb: front.attributes[:thumb]
+      },
+      back: {
+        url: back.nodes[0],
+        width: back.attributes[:width],
+        height: back.attributes[:height],
+        thumb: back.attributes[:thumb]
+      }
+    }
+  end
+
+  # Method for processing the fan art and screenshots into a uniform
+  # collection with url, width, height and thumb url
+  def self.images_from_nodes(data)
+    images = Array.new
+    data.each do |art|
+      images << {
+        url: art.original.nodes[0],
+        width: art.nodes.first.attributes[:width],
+        height: art.nodes.first.attributes[:height],
+        thumb: art.thumb.nodes[0]
+      }
+    end
+    images
+  end
+
 end
