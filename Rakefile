@@ -8,7 +8,7 @@ end
 task :console do
   require 'irb'
   require 'irb/completion'
-  require 'gamesdb'
+  require 'thegamesdb'
   ARGV.clear
   IRB.start
 end

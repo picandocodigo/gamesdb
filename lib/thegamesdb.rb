@@ -1,4 +1,4 @@
-require 'gamesdb/version'
+require 'thegamesdb/version'
 require 'ox'
 require 'net/http'
 

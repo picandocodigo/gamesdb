@@ -6,7 +6,7 @@ A Ruby gem to interact with [TheGamesDB](http://thegamesdb.net) [API](http://wik
 
 Add this line to your application's Gemfile:
 
-    gem 'gamesdb'
+    gem 'thegamesdb'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install gamesdb
+    $ gem install thegamesdb
 
 ## Usage
 

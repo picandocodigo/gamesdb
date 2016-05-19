@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'gamesdb/version'
+require 'thegamesdb/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'gamesdb'
+  spec.name          = 'thegamesdb'
   spec.version       = Gamesdb::VERSION
   spec.authors       = ['Fernando Briano']
   spec.email         = ['fernando@picandocodigo.net']
   spec.summary       = 'Client for TheGamesDB API (thegamesdb.net).'
-  spec.description   = 'Client for TheGamesDB API (thegamesdb.net).'
+  spec.description   = 'Ruby Client for TheGamesDB API (thegamesdb.net). See README.md for usage'
   spec.homepage      = 'http://github.com/picandocodigo/gamesdb'
   spec.license       = 'MIT'
 
