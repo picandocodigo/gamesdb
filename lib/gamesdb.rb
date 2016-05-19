@@ -61,6 +61,37 @@ module Gamesdb
     platforms
   end
 
+  # This API feature returns a set of metadata and artwork data for a
+  # specified Platform ID.
+  # http://wiki.thegamesdb.net/index.php/GetPlatform
+  #
+  # Parameters:
+  #  - id - (int) The numeric ID of the platform in the GamesDB database
+  #
+  # == Returns:
+  # Hash with platform info
+  #
+  def self.platform(id)
+    url = 'GetPlatform.php'
+    data = xml_response(url, id: id).Data.Platform
+    platform = { name: data.Platform.text }
+    data.nodes.each do |node|
+      platform[node.value.to_sym] = node.text
+    end
+    if data.Images
+      platform[:Images] = {
+        boxart: {
+          url: data.Images.boxart.text,
+          width: data.Images.boxart.attributes[:width],
+          height: data.Images.boxart.attributes[:height]
+        },
+        console_art: data.Images.consoleart.text,
+        controller_image: data.Images.controllerart.text
+      }
+    end
+    platform
+  end
+
   # Method for getting game info
   # TODO: name and platform parameters (for search)
   # http://wiki.thegamesdb.net/index.php?title=GetGame

@@ -22,6 +22,7 @@ This is still a work in progress, but for now you can use:
 
 * [Get Platforms](#get-platforms)
 * [Get Platform Games](#get-platform-games)
+* [Get Platform](#get-platform)
 * [Get Game](#get-game)
 * [Get Games List](#get-game-list)
 * [Get Art](#get-art)
@@ -70,6 +71,45 @@ http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
 {:name=>"Mega Man X", :id=>"143", :release_date=>"01/01/1994"},
 {:name=>"Teenage Mutant Ninja Turtles IV: Turtles In Time", :id=>"188", :release_date=>"08/01/1992"},
 ...
+```
+
+## Get Platform
+http://wiki.thegamesdb.net/index.php/GetPlatform
+>This API feature returns a set of metadata and artwork data for a specified Platform ID.
+
+**Usage**
+
+* Parameters: id - The numeric ID of the platform in the GamesDB database
+* Returns: Hash with platform info
+
+```ruby
+2.3.1 :001 > Gamesdb.platform(6)
+ => {:name=>"Super Nintendo (SNES)",
+ :id=>"6",
+ :Platform=>"Super Nintendo (SNES)",
+ :console=>"http://www.youtube.com/watch?v=6.png",
+ :controller=>"http://www.youtube.com/watch?v=6.png",
+ :overview=>"The Super Nintendo Entertainment System (also known as the Super NES, SNES or Super Nintendo) is a 16-bit video game console that was released by Nintendo...",
+ :developer=>"Nintendo",
+ :manufacturer=>"Nintendo",
+ :cpu=>"16-bit 65c816 Ricoh 5A22 3.58 MHz",
+ :memory=>"128kb",
+ :sound=>"8-bit Sony SPC700",
+ :display=>"512 × 239",
+ :media=>"Cartridge",
+ :maxcontrollers=>"2",
+ :Youtube=>"http://www.youtube.com/watch?v=9fSAnVpJ42w",
+ :Rating=>"7.5909",
+ :Images=>{
+   :boxart=>{
+     :url=>"platform/boxart/6-2.jpg",
+     :width=>"500",
+     :height=>"750"
+   },
+   :console_art=>"platform/consoleart/6.png",
+   :controller_image=>"platform/controllerart/6.png"
+  }
+}
 ```
 
 ## Get Game

@@ -53,6 +53,28 @@ describe Gamesdb do
     end
   end
 
+  describe 'platform' do
+    before do
+      VCR.insert_cassette('platform')
+      @platform = Gamesdb.platform 6
+    end
+
+    after do
+      VCR.eject_cassette
+    end
+
+    it 'should return valid platform info' do
+      @platform[:name].must_equal 'Super Nintendo (SNES)'
+      @platform[:overview].must_be_kind_of String
+      @platform[:developer].must_be_kind_of String
+      @platform[:manufacturer].must_equal 'Nintendo'
+      @platform[:cpu].must_be_kind_of String
+      @platform[:memory].must_be_kind_of String
+      @platform[:sound].must_be_kind_of String
+      @platform[:display].must_be_kind_of String
+    end
+  end
+
   describe 'game' do
     before do
       VCR.insert_cassette('game')
