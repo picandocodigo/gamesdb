@@ -21,7 +21,7 @@ module Gamesdb
 
     data.nodes[0].nodes.each do |elem|
       name = elem.GameTitle.text
-      id = elem.id.nodes[0]
+      id = elem.id.text
       date = nil
       # TODO: Fix this:
       begin
@@ -166,7 +166,7 @@ module Gamesdb
     fanart = data.nodes.select { |a| a.value == "fanart" }
     screenshots = data.nodes.select{ |s| s.value == "screenshot"}
     images = {
-      logo: data.clearlogo.nodes[0],
+      logo: data.clearlogo.text,
       boxart: build_boxart(boxart),
       screenshots: images_from_nodes(screenshots),
       fanart: images_from_nodes(fanart)
@@ -178,20 +178,17 @@ module Gamesdb
   def self.build_boxart(boxart)
     front = boxart.select { |b| b.attributes[:side] == 'front' }[0]
     back = boxart.pop
-    {
-      front: {
-        url: front.nodes[0],
-        width: front.attributes[:width],
-        height: front.attributes[:height],
-        thumb: front.attributes[:thumb]
-      },
-      back: {
-        url: back.nodes[0],
-        width: back.attributes[:width],
-        height: back.attributes[:height],
-        thumb: back.attributes[:thumb]
+    art = {}
+    ['front', 'back'].each do |face|
+      name = eval(face)
+      art[face.to_sym] = {
+        url: name.text,
+        width: name.attributes[:width],
+        height: name.attributes[:height],
+        thumb: name.attributes[:thumb]
       }
-    }
+    end
+    art
   end
 
   # Method for processing the fan art and screenshots into a uniform
@@ -203,7 +200,7 @@ module Gamesdb
         url: art.original.nodes[0],
         width: art.nodes.first.attributes[:width],
         height: art.nodes.first.attributes[:height],
-        thumb: art.thumb.nodes[0]
+        thumb: art.thumb.text
       }
     end
     images
