@@ -35,21 +35,30 @@ describe Gamesdb do
     it 'should have a valid id' do
       @platforms[0][:id].must_be_kind_of Integer
     end
+
+    it 'should have a valid slug' do
+      @platforms[0][:slug].must_be_kind_of String
+    end
   end
 
   describe 'platform_games' do
     before do
       VCR.insert_cassette('platform_games')
       platforms = Gamesdb.platforms
-      @games = Gamesdb.platform_games(platforms[0][:id])
+      @games_by_id = Gamesdb.platform_games(platforms[0][:id])
+      @games_by_slug = Gamesdb.platform_games(platforms[0][:slug])
     end
 
     after do
       VCR.eject_cassette
     end
 
+    it 'should return games in platform by id' do
+      @games_by_id.count.wont_be :<, 0
+    end
+
     it 'should return games in platform' do
-      @games.count.wont_be :<, 0
+      @games_by_slug.count.wont_be :<, 0
     end
   end
 

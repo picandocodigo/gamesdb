@@ -21,7 +21,7 @@ Or install it yourself as:
 This is still a work in progress, but for now you can use:
 
 * [Get Platforms](#get-platforms)
-* [Get Platform Games](#get-platform-games)
+* [Get Platform Games || Platform Games](#get-platform-games)
 * [Get Platform](#get-platform)
 * [Get Game](#get-game)
 * [Get Games List](#get-game-list)
@@ -51,15 +51,22 @@ $ irb
  ...
 ```
 
-### Get Platform Games
+### Get Platform Games OR Platform Games
+The same method implements `GetPlatformGames` and `PlatformGames`. The first receives the platform id as a parameter, the second one receives the slug. You can find the slug with the GetPlatform method. The return is the same for both methods.
+
 http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
 >The GetPlatformGames API method returns a listing of all games available on the site for the given platform.
 
-**Usage**
+http://wiki.thegamesdb.net/index.php/PlatformGames
+>The PlatformGames API call lists all games under a certain platform.
 
-* Parameters: id - the integer id of the required platform, as retrived from GetPlatformsList
+* Parameters:
+  * id - the integer id of the required platform, as retrived from GetPlatformsList
+  * platform (string) : the platform slug to list games for (for more information on how to attain a valid platform slug see GetPlatformsList)
+
 * Returns: Array with games info in Hashes with `:id`, `:name` and `:release_date`.
 
+With id:
 ```ruby
 2.1.2 :003 > Gamesdb.platform_games(6)
 => [{:name=>"Super Mario Kart", :id=>"41", :release_date=>"09/01/1992"},
@@ -71,6 +78,17 @@ http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
 {:name=>"Mega Man X", :id=>"143", :release_date=>"01/01/1994"},
 {:name=>"Teenage Mutant Ninja Turtles IV: Turtles In Time", :id=>"188", :release_date=>"08/01/1992"},
 ...
+```
+With slug:
+```ruby
+2.3.1 :001 > Gamesdb.platform_games("3do")
+ => [
+ {:name=>"Mad Dog McCree", :id=>"6429", :release_date=>"01/01/1994"},
+ {:name=>"AD&D: Slayer", :id=>"3143", :release_date=>"01/01/1994"},
+ {:name=>"Blade Force", :id=>"4826", :release_date=>"04/05/1995"},
+ {:name=>"Battle Chess", :id=>"4829", :release_date=>"01/01/1993"},
+ {:name=>"Brain Dead 13", :id=>"4830", :release_date=>"01/01/1996"},
+ ...
 ```
 
 ## Get Platform

@@ -10,28 +10,15 @@ module Gamesdb
   # Method for listing platform's games
   # http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
   #
-  # Parameters: platform id (int)
+  # Parameters: platform id (int) || platform slug (string)
+  # For information on how to attain a valid platform slug see `platform`
   #
   # == Returns:
   # Array of Hashes with games info
   def self.platform_games(platform)
-    url = 'GetPlatformGames.php'
+    url = (platform.is_a? Numeric) ? 'GetPlatformGames.php' :  'PlatformGames.php'
     data = xml_response(url, platform: platform)
-    games = []
-
-    data.nodes[0].nodes.each do |elem|
-      name = elem.GameTitle.text
-      id = elem.id.text
-      date = nil
-      # TODO: Fix this:
-      begin
-        date = elem.ReleaseDate.text
-      rescue NoMethodError
-        # No release date, nothing to do
-      end
-      games << { name: name, id: id, release_date: date }
-    end
-    games
+    process_platform_games(data)
   end
 
   # Method for listing platforms
@@ -50,12 +37,7 @@ module Gamesdb
     data.nodes[0].Platforms.nodes.each do |platform|
       id = platform.id.text
       name = platform.nodes[1].text
-      slug = nil
-      begin
-      # TODO: slug
-      # slug = platform.alias.text
-      rescue NoMethodError
-      end
+      slug = platform.respond_to?(:alias) ?  platform.alias.text : ''
       platforms << { name: name, id: id.to_i, slug: slug }
     end
     platforms
@@ -157,6 +139,25 @@ module Gamesdb
     uri.query = URI.encode_www_form(params)
     request = Net::HTTP.get_response(uri)
     Ox.parse(request.body)
+  end
+
+  # Process games for platform_games
+  def self.process_platform_games(data)
+    games = []
+
+    data.nodes[0].nodes.each do |elem|
+      name = elem.GameTitle.text
+      id = elem.id.text
+      date = nil
+      # TODO: Fix this:
+      begin
+        date = elem.ReleaseDate.text
+      rescue NoMethodError
+        # No release date, nothing to do
+      end
+      games << { name: name, id: id, release_date: date }
+    end
+    games
   end
 
   def self.process_game(game)
