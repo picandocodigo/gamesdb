@@ -67,6 +67,7 @@ http://wiki.thegamesdb.net/index.php/PlatformGames
 * Returns: Array with games info in Hashes with `:id`, `:name` and `:release_date`.
 
 With id:
+
 ```ruby
 2.1.2 :003 > Gamesdb.platform_games(6)
 => [{:name=>"Super Mario Kart", :id=>"41", :release_date=>"09/01/1992"},
@@ -79,7 +80,9 @@ With id:
 {:name=>"Teenage Mutant Ninja Turtles IV: Turtles In Time", :id=>"188", :release_date=>"08/01/1992"},
 ...
 ```
+
 With slug:
+
 ```ruby
 2.3.1 :001 > Gamesdb.platform_games("3do")
  => [
@@ -91,7 +94,7 @@ With slug:
  ...
 ```
 
-## Get Platform
+### Get Platform
 http://wiki.thegamesdb.net/index.php/GetPlatform
 >This API feature returns a set of metadata and artwork data for a specified Platform ID.
 
@@ -130,7 +133,7 @@ http://wiki.thegamesdb.net/index.php/GetPlatform
 }
 ```
 
-## Get Game
+### Get Game
 http://wiki.thegamesdb.net/index.php?title=GetGame
 >The GetGameApi title search returns game data in an XML document or if an id is given it just returns the data for that specific game.
 
@@ -153,7 +156,7 @@ http://wiki.thegamesdb.net/index.php?title=GetGame
 :front=>"boxart/original/front/109-1.jpg"}}
 ```
 
-## Get Games List
+### Get Games List
 http://wiki.thegamesdb.net/index.php/GetGamesList
 >The GetGamesList API search returns a listing of games matched up with loose search terms.  *Note: We have implemented special character stripping and loose word order searching in an attempt to provide better matching and a return a greater number of relevant hits.*
 
@@ -172,7 +175,7 @@ http://wiki.thegamesdb.net/index.php/GetGamesList
  ...
 ```
 
-## Get Art
+### Get Art
 http://wiki.thegamesdb.net/index.php/GetArt
 >This API feature returns a list of available artwork types and locations specific to the requested game id in the database. It also lists the resolution of any images available.
 
