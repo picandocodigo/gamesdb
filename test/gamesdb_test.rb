@@ -63,24 +63,67 @@ describe Gamesdb do
   end
 
   describe 'platform' do
-    before do
-      VCR.insert_cassette('platform')
-      @platform = Gamesdb.platform 6
+    describe 'assigning basic info' do
+      before do
+        VCR.insert_cassette('nintendo platform')
+        @platform = Gamesdb.platform 6
+      end
+
+      after do
+        VCR.eject_cassette
+      end
+
+      it 'should return valid platform info' do
+        @platform[:name].must_equal 'Super Nintendo (SNES)'
+        @platform[:overview].must_be_kind_of String
+        @platform[:developer].must_be_kind_of String
+        @platform[:manufacturer].must_equal 'Nintendo'
+        @platform[:cpu].must_be_kind_of String
+        @platform[:memory].must_be_kind_of String
+        @platform[:sound].must_be_kind_of String
+        @platform[:display].must_be_kind_of String
+      end
+
+      it 'should assign images if provided' do
+        images = @platform[:Images]
+        images[:boxart][:url].must_equal "platform/boxart/6-2.jpg"
+        images[:boxart][:width].must_equal "500"
+        images[:boxart][:height].must_equal "750"
+        images[:console_art].must_equal "platform/consoleart/6.png"
+        images[:controller_image].must_equal "platform/controllerart/6.png"
+      end
+
     end
 
-    after do
-      VCR.eject_cassette
-    end
+    describe 'without hardware or images' do
+      before do
+        VCR.insert_cassette('android platform')
+        @platform = Gamesdb.platform 4916
+      end
 
-    it 'should return valid platform info' do
-      @platform[:name].must_equal 'Super Nintendo (SNES)'
-      @platform[:overview].must_be_kind_of String
-      @platform[:developer].must_be_kind_of String
-      @platform[:manufacturer].must_equal 'Nintendo'
-      @platform[:cpu].must_be_kind_of String
-      @platform[:memory].must_be_kind_of String
-      @platform[:sound].must_be_kind_of String
-      @platform[:display].must_be_kind_of String
+      after do
+        VCR.eject_cassette
+      end
+
+      it 'should return valid platform info' do
+        @platform[:name].must_equal 'Android'
+        @platform[:overview].must_be_kind_of String
+        @platform[:developer].must_be_kind_of String
+        @platform[:manufacturer].must_be_nil
+        @platform[:cpu].must_be_nil
+        @platform[:memory].must_be_nil
+        @platform[:sound].must_be_nil
+        @platform[:display].must_be_nil
+      end
+
+      it 'should not fail hard if no images are provided' do
+        images = @platform[:Images]
+        images[:boxart][:url].must_equal "platform/boxart/4916-2.jpg"
+        images[:boxart][:width].must_equal "820"
+        images[:boxart][:height].must_equal "1080"
+        images[:console_art].must_be_nil
+        images[:controller_image].must_be_nil
+      end
     end
   end
 
