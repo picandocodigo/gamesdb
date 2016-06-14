@@ -61,15 +61,21 @@ module Gamesdb
       platform[node.value.to_sym] = node.text
     end
     if data.Images
-      platform[:Images] = {
-        boxart: {
-          url: data.Images.boxart.text,
-          width: data.Images.boxart.attributes[:width],
-          height: data.Images.boxart.attributes[:height]
-        },
-        console_art: data.Images.consoleart.text,
-        controller_image: data.Images.controllerart.text
-      }
+      boxart = data.Images.boxart rescue nil
+      platform[:Images] = {}
+      if boxart
+        platform[:Images][:boxart] = {
+          url: boxart.text,
+          width: boxart.attributes[:width],
+          height: boxart.attributes[:height]
+        }
+      end
+      if consoleart = data.Images.consoleart rescue nil
+        platform[:Images][:console_art] = consoleart.text
+      end
+      if controllerart = data.Images.controllerart rescue nil
+        platform[:Images][:controller_image] = controllerart.text
+      end
     end
     platform
   end
@@ -166,15 +172,20 @@ module Gamesdb
       key = a.attributes[:side].to_sym
       images[key] = a.text
     end
-    {
+    attributes = {
       id: game.id.text.to_i, title: game.GameTitle.text,
-      release_date: game.ReleaseDate.text, platform: game.Platform.text,
-      overview: game.Overview.text, publisher: game.Publisher.text,
-      developer: game.Developer.text,
-      genres: game.Genres.nodes.map(&:text).join(', '),
+      platform: game.Platform.text,
+      platform_id: game.PlatformId.text,
       # esrb: game.ESRB.text, rating: game.Rating.text,
       images: images
     }
+    attributes[:overview] = game.Overview.text rescue ''
+    attributes[:publisher] = game.Publisher.text rescue ''
+    attributes[:developer] = game.Developer.text rescue ''
+    attributes[:release_date] = game.ReleaseDate.text rescue ''
+    attributes[:genres] = game.Genres.nodes.map(&:text) rescue []
+    attributes[:coop] = game.send('Co-op').text != 'No' rescue false
+    attributes
   end
 
   def self.build_games_list(data)
