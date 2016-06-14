@@ -177,7 +177,8 @@ module Gamesdb
       release_date: game.ReleaseDate.text, platform: game.Platform.text,
       overview: game.Overview.text, publisher: game.Publisher.text,
       developer: game.Developer.text,
-      genres: game.Genres.nodes.map(&:text).join(', '),
+      genres: game.Genres.nodes.map(&:text),
+      platform_id: game.PlatformId,
       # esrb: game.ESRB.text, rating: game.Rating.text,
       images: images
     }
