@@ -1,9 +1,9 @@
 require 'simplecov'
 SimpleCov.start
-require 'vcr'
-require 'minitest/spec'
 require 'minitest/autorun'
-require "minitest/reporters"
+require 'minitest/reporters'
+require 'minitest/spec'
+require 'vcr'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require 'thegamesdb'
 
@@ -13,7 +13,6 @@ VCR.configure do |c|
 end
 
 describe Gamesdb do
-
   describe 'platforms' do
     before do
       VCR.insert_cassette('platforms')
@@ -86,13 +85,12 @@ describe Gamesdb do
 
       it 'should assign images if provided' do
         images = @platform[:Images]
-        images[:boxart][:url].must_equal "platform/boxart/6-2.jpg"
-        images[:boxart][:width].must_equal "500"
-        images[:boxart][:height].must_equal "750"
-        images[:console_art].must_equal "platform/consoleart/6.png"
-        images[:controller_image].must_equal "platform/controllerart/6.png"
+        images[:boxart][:url].must_equal 'platform/boxart/6-2.jpg'
+        images[:boxart][:width].must_equal '500'
+        images[:boxart][:height].must_equal '750'
+        images[:console_art].must_equal 'platform/consoleart/6.png'
+        images[:controller_image].must_equal 'platform/controllerart/6.png'
       end
-
     end
 
     describe 'without hardware or images' do
@@ -118,9 +116,9 @@ describe Gamesdb do
 
       it 'should not fail hard if no images are provided' do
         images = @platform[:Images]
-        images[:boxart][:url].must_equal "platform/boxart/4916-2.jpg"
-        images[:boxart][:width].must_equal "820"
-        images[:boxart][:height].must_equal "1080"
+        images[:boxart][:url].must_equal 'platform/boxart/4916-2.jpg'
+        images[:boxart][:width].must_equal '820'
+        images[:boxart][:height].must_equal '1080'
         images[:console_art].must_be_nil
         images[:controller_image].must_be_nil
       end
@@ -170,7 +168,7 @@ describe Gamesdb do
   describe 'games art' do
     before do
       VCR.insert_cassette('game_art')
-      @images = Gamesdb.art("216")
+      @images = Gamesdb.art('216')
     end
 
     after do

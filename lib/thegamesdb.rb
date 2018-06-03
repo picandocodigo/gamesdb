@@ -237,7 +237,7 @@ module Gamesdb
   # Method for processing the fan art and screenshots into a uniform
   # collection with url, width, height and thumb url
   def self.images_from_nodes(data)
-    images = Array.new
+    images = []
     data.each do |art|
       images << {
         url: art.original.nodes[0],
@@ -248,5 +248,4 @@ module Gamesdb
     end
     images
   end
-
 end
