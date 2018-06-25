@@ -8,24 +8,33 @@ Add this line to your application's Gemfile:
 
     gem 'thegamesdb'
 
-And then execute:
+And then run:
 
-    $ bundle
+    $ bundle install
 
-Or install it yourself as:
+Or install it in your system with:
 
     $ gem install thegamesdb
 
 ## Usage
 
-This is still a work in progress, but for now you can use:
+This is still a work in progress, but for now you can use most of the API:
 
-* [Get Platforms](#get-platforms)
-* [Get Platform Games || Platform Games](#get-platform-games)
-* [Get Platform](#get-platform)
-* [Get Game](#get-game)
-* [Get Games List](#get-game-list)
-* [Get Art](#get-art)
+
+| API call | gem call |
+|------------------| ----|
+| [GetGamesList](http://wiki.thegamesdb.net/index.php/GetGamesList)         | [Get Games List](#get-games-list)                           |
+| [GetGame](http://wiki.thegamesdb.net/index.php/GetGame)                   | [Get Game](#get-game)                                       |
+| [GetArt](http://wiki.thegamesdb.net/index.php/GetArt)                     | [Get Art](#get-art)                                         |
+| [GetPlatformsList](http://wiki.thegamesdb.net/index.php/GetPlatformsList) | [Get Platforms](#get-platforms)                             |
+| [GetPlatform](http://wiki.thegamesdb.net/index.php/GetPlatform)           | [Get Platform](#get-platform)                               |
+| [GetPlatformGames](http://wiki.thegamesdb.net/index.php/GetPlatformGames) | [Get Platform Games](#get-platform-games-or-platform-games) |
+| [PlatformGames](http://wiki.thegamesdb.net/index.php/PlatformGames)       | [Platform Games](#get-platform-games-or-platform-games)     |
+| [Updates](http://wiki.thegamesdb.net/index.php/Updates)                   | _Not implemented yet_                                         |
+| [UserRating](http://wiki.thegamesdb.net/index.php/UserRating)             | _Not implemented yet_                                         |
+| [UserFavorites](http://wiki.thegamesdb.net/index.php/UserFavorites)       | _Not implemented yet_                                         |
+
+
 
 ### Get Platforms
 http://wiki.thegamesdb.net/index.php?title=GetPlatformsList
