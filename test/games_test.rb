@@ -23,9 +23,8 @@ describe "Gamesdb - games", :vcr do
     end
 
     it 'should return a list' do
-      @games_list.count.wont_be :<, 0
       game = @games_list.first
-      game[:id].must_be_kind_of String
+      game[:id].must_be_kind_of Integer
       game[:name].must_be_kind_of String
       game[:platform].must_be_kind_of String
     end
@@ -46,18 +45,18 @@ describe "Gamesdb - games", :vcr do
     end
 
     it 'should return screenshots' do
-      @images[:screenshots].count.wont_be :<, 0
-      @images[:screenshots].first[:url].must_be_kind_of String
-      @images[:screenshots].first[:width].must_be_kind_of String
-      @images[:screenshots].first[:height].must_be_kind_of String
-      @images[:screenshots].first[:thumb].must_be_kind_of String
+      @images[:screenshot].count.wont_be :<, 0
+      @images[:screenshot].first[:original][1].must_be_kind_of String
+      @images[:screenshot].first[:original].first[:width].must_be_kind_of String
+      @images[:screenshot].first[:original].first[:height].must_be_kind_of String
+      @images[:screenshot].first[:thumb].must_be_kind_of String
     end
 
     it 'should return fanart' do
       @images[:fanart].count.wont_be :<, 0
-      @images[:fanart].first[:url].must_be_kind_of String
-      @images[:fanart].first[:width].must_be_kind_of String
-      @images[:fanart].first[:height].must_be_kind_of String
+      @images[:fanart].first[:original][1].must_be_kind_of String
+      @images[:fanart].first[:original].first[:width].must_be_kind_of String
+      @images[:fanart].first[:original].first[:height].must_be_kind_of String
       @images[:fanart].first[:thumb].must_be_kind_of String
     end
   end
