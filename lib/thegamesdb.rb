@@ -4,8 +4,8 @@ require 'net/http'
 
 # Client for TheGamesDB API (thegamesdb.net)
 module Gamesdb
-  BASE_URL = 'http://thegamesdb.net/api/'
-  IMAGES_BASE_URL = 'http://thegamesdb.net/banners/'
+  BASE_URL = 'http://legacy.thegamesdb.net/api/'
+  IMAGES_BASE_URL = 'http://legacy.thegamesdb.net/banners/'
 
   # Method for listing platform's games
   # http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
@@ -16,7 +16,7 @@ module Gamesdb
   # == Returns:
   # Array of Hashes with games info
   def self.platform_games(platform)
-    url = (platform.is_a? Numeric) ? 'GetPlatformGames.php' :  'PlatformGames.php'
+    url = platform.is_a?(Numeric) ? 'GetPlatformGames.php' : 'PlatformGames.php'
     data = xml_response(url, platform: platform)
     process_platform_games(data)
   end
