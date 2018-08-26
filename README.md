@@ -1,6 +1,7 @@
 # Gamesdb
-
 A Ruby gem to interact with [TheGamesDB](http://thegamesdb.net) [API](http://wiki.thegamesdb.net/index.php?title=API_Introduction).
+
+[![Build Status](https://api.travis-ci.com/picandocodigo/gamesdb.svg?branch=master)](https://travis-ci.com/picandocodigo/gamesdb)
 
 ## Installation
 
