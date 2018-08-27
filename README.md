@@ -4,6 +4,7 @@ A Ruby gem to interact with [TheGamesDB](http://thegamesdb.net) API.
 It's currently using [the legacy API](http://wiki.thegamesdb.net/index.php/API_Introduction) which is available in read only mode [More info](https://forums.thegamesdb.net/viewtopic.php?f=11&t=86). But it'll be updated to use [the new API endpoints](https://api.thegamesdb.net/), for which you'll need to request an API key. I'll keep a way to use the legacy API with a Legacy module anyways.
 
 [![Build Status](https://api.travis-ci.com/picandocodigo/gamesdb.svg?branch=master)](https://travis-ci.com/picandocodigo/gamesdb)
+[![Gem Version](https://badge.fury.io/rb/thegamesdb.svg)](https://badge.fury.io/rb/thegamesdb)
 
 ## Installation
 
