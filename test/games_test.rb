@@ -1,6 +1,6 @@
 require_relative './test_helper.rb'
 
-describe "Gamesdb - games", :vcr do
+describe 'Gamesdb - games', :vcr do
   describe 'game' do
     before do
       @game = Gamesdb.game(109)

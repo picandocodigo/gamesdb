@@ -1,4 +1,4 @@
-describe "GamesDB - platforms", :vcr do
+describe 'GamesDB - platforms', :vcr do
   describe 'platforms' do
     before do
       @platforms = Gamesdb.platforms

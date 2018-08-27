@@ -4,8 +4,8 @@ require 'net/http'
 
 # Client for TheGamesDB API (thegamesdb.net)
 module Gamesdb
-  BASE_URL = 'http://legacy.thegamesdb.net/api/'
-  IMAGES_BASE_URL = 'http://legacy.thegamesdb.net/banners/'
+  BASE_URL = 'http://legacy.thegamesdb.net/api/'.freeze
+  IMAGES_BASE_URL = 'http://legacy.thegamesdb.net/banners/'.freeze
 
   # Method for listing platform's games
   # http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
@@ -123,7 +123,7 @@ module Gamesdb
     boxart.each do |art|
       next unless art.is_a?(Hash)
       covers[art[:side].to_sym] = {
-        url: art[:thumb].gsub('thumb/',''),
+        url: art[:thumb].gsub('thumb/', ''),
         width: art[:width],
         height: art[:height],
         thumb: art[:thumb]
