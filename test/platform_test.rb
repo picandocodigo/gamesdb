@@ -1,3 +1,5 @@
+require_relative './test_helper'
+
 describe 'GamesDB - platforms', :vcr do
   describe 'platforms' do
     before do

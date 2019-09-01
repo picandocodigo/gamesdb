@@ -1,11 +1,12 @@
 require 'thegamesdb/version'
-require 'ox'
+require 'thegamesdb/config'
 require 'net/http'
+require 'json'
 
 # Client for TheGamesDB API (thegamesdb.net)
 module Gamesdb
-  BASE_URL = 'http://legacy.thegamesdb.net/api/'.freeze
-  IMAGES_BASE_URL = 'http://legacy.thegamesdb.net/banners/'.freeze
+  BASE_URL = 'https://api.thegamesdb.net/'.freeze
+  IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'.freeze
 
   # Method for listing platform's games
   # http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
@@ -68,10 +69,14 @@ module Gamesdb
   # Hash with game info
   #
   def self.game(id)
-    url = 'GetGame.php'
-    data = xml_response(url, id: id)
-    game = process_game(data[:Game])
-    game
+    url = 'Games/ByGameID'
+    params = {
+      id: id,
+      fields: 'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates',
+      include: 'boxart,platform'
+    }
+    data = json_response(url, params)
+    symbolize_keys(data['games'].first)
   end
 
   # The GetGamesList API search returns a listing of games matched up
@@ -89,9 +94,9 @@ module Gamesdb
   # platform
   #
   def self.games_list(name)
-    url = 'GetGamesList.php'
-    data = xml_response(url, name: name)
-    data[:Game].map { |game| process_game(game) }
+    url = 'Games/ByGameName'
+    data = json_response(url, name: name)
+    data['games'].map { |game| symbolize_keys(game) }
   end
 
   # This API feature returns a list of available artwork types and
@@ -109,48 +114,97 @@ module Gamesdb
   # :back),  screenshots (array), fanart (array)
   #
   def self.art(id)
-    url = 'GetArt.php'
-    data = xml_response(url, id: id)[:Images]
-    data[:logo] = data[:clearlogo].last
-    data[:boxart] = process_covers(data[:boxart])
-    data
+    url = 'Games/Images'
+    data = json_response(url, games_id: id)
+    response = {}
+
+    response[:base_url] = data['base_url']['original']
+    response[:logo] = process_logo(data, id)
+    response[:boxart] = process_covers(data, id)
+    response[:screenshot] = process_screenshots(data, id)
+    response[:fanart] = process_fanart(data, id)
+    response
   end
 
-  def self.process_covers(boxart)
-    boxart = boxart.flatten
+  def self.process_logo(data, id)
+    return [] if data['images'].empty?
+    logo = data['images'][id].select { |a| a['type'] == "clearlogo" }
+    logo.empty? ? '' : logo.first['filename']
+  end
 
-    covers = {}
-    boxart.each do |art|
-      next unless art.is_a?(Hash)
-      covers[art[:side].to_sym] = {
-        url: art[:thumb].gsub('thumb/', ''),
-        width: art[:width],
-        height: art[:height],
-        thumb: art[:thumb]
+  def self.process_fanart(data, id)
+    return [] if data['images'].empty?
+    fanarts = []
+    fanart = data['images'][id].select do |a|
+      a['type'] == 'fanart'
+    end
+    return [] if fanart.empty?
+    fanart.each do |art|
+      width, height = art['resolution'].split("x") unless art['resolution'].nil?
+      fanarts << {
+        url: art['filename'],
+        resolution: art['resolution'],
+        width: width,
+        height: height
       }
     end
-    covers
+    fanarts
+  end
+
+  def self.process_screenshots(data, id)
+    return [] if data['images'].empty?
+    data['images'][id].select do |a|
+      a['type'] == 'screenshot'
+    end.map { |b| symbolize_keys(b) }
+  end
+
+  def self.process_covers(data, id)
+    return [] if data['images'].empty?
+    covers = {}
+    boxart = data['images'][id].select do |a|
+      a['type'] == "boxart"
+    end
+    return [] if boxart.empty?
+    boxart.each do |art|
+      width, height = art['resolution'].split("x") unless art['resolution'].nil?
+      covers[art['side'].to_sym] = {
+        url: art['filename'],
+        resolution: art['resolution'],
+        width: width,
+        height: height
+      }
+    end
+    # TODO: I think this is not necessary:
+    symbolize_keys(covers)
   end
 
   private
 
+  def self.configuration
+    @configuration ||= Config.new
+  end
+
   # Api call and xml parsing
-  def self.xml_response(url, params = {})
+  def self.json_response(url, params = {})
+    params = params.merge({apikey: configuration.api_key})
+
     uri = URI(BASE_URL + url)
     uri.query = URI.encode_www_form(params)
     request = Net::HTTP.get_response(uri)
-    Ox.load(request.body, mode: :hash)[:Data]
+    response = JSON.parse(request.body)
+    response['data']
   end
 
   # Process games for platform_games
   def self.process_platform_games(data)
     games = []
 
-    data.first.last.each do |elem|
-      name = elem[:GameTitle]
-      id = elem[:id].to_i
-      date = elem.dig(:ReleaseDate)
-      games << { name: name, id: id, release_date: date }
+    data['games'].each do |elem|
+      name = elem['game_title']
+      id = elem['id']
+      date = elem['release_date']
+      developers = elem['developers']
+      games << { name: name, id: id, release_date: date, developers: developers }
     end
     games
   end
@@ -176,5 +230,12 @@ module Gamesdb
       }
     end
     images
+  end
+
+  def self.symbolize_keys(hash)
+    hash.keys.each do |key|
+      hash[key.to_sym] = hash.delete(key)
+    end
+    hash
   end
 end

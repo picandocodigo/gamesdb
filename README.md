@@ -24,6 +24,21 @@ Or install it in your system with:
 
     $ gem install thegamesdb
 
+Request an API Key [here](https://forums.thegamesdb.net/viewforum.php?f=10).
+
+## Development
+
+Run all tests:
+
+```
+GAMESDB_API_KEY='your_api_key' rake test
+```
+
+Run a single test:
+```
+GAMESDB_API_KEY='your_api_key' rake test TEST=test/platform_test.rb
+```
+
 ## Usage
 
 For now you can use most of the API:
