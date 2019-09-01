@@ -9,21 +9,21 @@ module Gamesdb
   IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'.freeze
 
   # Method for listing platform's games
-  # http://wiki.thegamesdb.net/index.php?title=GetPlatformGames
+  # https://api.thegamesdb.net/#/operations/Games/GamesByPlatformID
   #
-  # Parameters: platform id (int) || platform slug (string)
-  # For information on how to attain a valid platform slug see `platform`
+  # Parameters: platform id (int)
   #
   # == Returns:
   # Array of Hashes with games info
-  def self.platform_games(platform)
-    url = platform.is_a?(Numeric) ? 'GetPlatformGames.php' : 'PlatformGames.php'
-    data = xml_response(url, platform: platform)
+  #
+  def self.games_by_platform_id(platform_id)
+    url = 'Games/ByPlatformID'
+    data = json_response(url, id: platform_id)
     process_platform_games(data)
   end
 
   # Method for listing platforms
-  # http://wiki.thegamesdb.net/index.php?title=GetPlatformsList
+  # https://api.thegamesdb.net/#/operations/Platforms/Platforms
   #
   # Parameters: none
   #
@@ -31,19 +31,20 @@ module Gamesdb
   # Array of Hashes with platforms info
   #
   def self.platforms
-    url = 'GetPlatformsList.php'
-    data = xml_response(url)
+    url = 'Platforms'
+    data = json_response(url)
     platforms = []
 
-    data[:Platforms].first.last.each do |platform|
-      platforms << { name: platform[:name], id: platform[:id].to_i, slug: platform[:alias] }
+    data['platforms'].each do |p|
+      platform = p.last
+      platforms << { name: platform['name'], id: platform['id'].to_i, slug: platform['alias'] }
     end
     platforms
   end
 
   # This API feature returns a set of metadata and artwork data for a
   # specified Platform ID.
-  # http://wiki.thegamesdb.net/index.php/GetPlatform
+  # https://api.thegamesdb.net/#/operations/Platforms/PlatformsByPlatformID
   #
   # Parameters:
   #  - id - (int) The numeric ID of the platform in the GamesDB database
@@ -51,16 +52,21 @@ module Gamesdb
   # == Returns:
   # Hash with platform info
   #
-  def self.platform(id)
-    url = 'GetPlatform.php'
-    data = xml_response(url, id: id)[:Platform]
-    data[:name] = data.delete(:Platform)
-    data
+  def self.platform_by_id(id)
+    url = 'Platforms/ByPlatformID'
+    params = {
+      id: id,
+      fields: 'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,display,overview,youtube'
+    }
+    data = json_response(url, params)
+
+    response = data['platforms'].values.first
+    symbolize_keys(response)
   end
 
   # Method for getting game info
   # TODO: name and platform parameters (for search)
-  # http://wiki.thegamesdb.net/index.php?title=GetGame
+  # https://api.thegamesdb.net/#/operations/Games/GamesByGameID
   #
   # Parameters:
   #  - id - (int) Game id
@@ -68,7 +74,7 @@ module Gamesdb
   # == Returns:
   # Hash with game info
   #
-  def self.game(id)
+  def self.game_by_id(id)
     url = 'Games/ByGameID'
     params = {
       id: id,
@@ -76,24 +82,22 @@ module Gamesdb
       include: 'boxart,platform'
     }
     data = json_response(url, params)
+    return [] if data["count"] == 0
     symbolize_keys(data['games'].first)
   end
 
   # The GetGamesList API search returns a listing of games matched up
   # with loose search terms.
-  # http://wiki.thegamesdb.net/index.php/GetGamesList
+  # https://api.thegamesdb.net/#/operations/Games/GamesByGameName
   #
   # Parameters:
   # - name (required)
-  # - TODO: platform (optional): filters results by platform (not implemented)
-  # - TODO: genre (optional): filters results by genre (not
-  # implemented)
   #
   # == Returns:
   # Hash with game info:  id, name (not-unique), release_date,
   # platform
   #
-  def self.games_list(name)
+  def self.games_by_name(name)
     url = 'Games/ByGameName'
     data = json_response(url, name: name)
     data['games'].map { |game| symbolize_keys(game) }
@@ -103,7 +107,7 @@ module Gamesdb
   # locations specific to the requested game id in the database. It
   # also lists the resolution of any images available. Scrapers can be
   # set to use a minimum or maximum resolution for specific images
-  # http://wiki.thegamesdb.net/index.php/GetArt
+  # https://api.thegamesdb.net/#/operations/Games/GamesImages
   #
   # Parameters
   # - id - (integer) The numeric ID of the game in Gamesdb that you
@@ -113,11 +117,12 @@ module Gamesdb
   # Hash with game art info: fanart (array), boxart (Hash, :front,
   # :back),  screenshots (array), fanart (array)
   #
-  def self.art(id)
+  def self.game_images(id)
     url = 'Games/Images'
     data = json_response(url, games_id: id)
-    response = {}
+    return [] if data['count'] == 0
 
+    response = {}
     response[:base_url] = data['base_url']['original']
     response[:logo] = process_logo(data, id)
     response[:boxart] = process_covers(data, id)
@@ -127,15 +132,13 @@ module Gamesdb
   end
 
   def self.process_logo(data, id)
-    return [] if data['images'].empty?
-    logo = data['images'][id].select { |a| a['type'] == "clearlogo" }
+    logo = data['images'][id.to_s].select { |a| a['type'] == "clearlogo" }
     logo.empty? ? '' : logo.first['filename']
   end
 
   def self.process_fanart(data, id)
-    return [] if data['images'].empty?
     fanarts = []
-    fanart = data['images'][id].select do |a|
+    fanart = data['images'][id.to_s].select do |a|
       a['type'] == 'fanart'
     end
     return [] if fanart.empty?
@@ -152,16 +155,14 @@ module Gamesdb
   end
 
   def self.process_screenshots(data, id)
-    return [] if data['images'].empty?
-    data['images'][id].select do |a|
+    data['images'][id.to_s].select do |a|
       a['type'] == 'screenshot'
     end.map { |b| symbolize_keys(b) }
   end
 
   def self.process_covers(data, id)
-    return [] if data['images'].empty?
     covers = {}
-    boxart = data['images'][id].select do |a|
+    boxart = data['images'][id.to_s].select do |a|
       a['type'] == "boxart"
     end
     return [] if boxart.empty?
@@ -174,8 +175,7 @@ module Gamesdb
         height: height
       }
     end
-    # TODO: I think this is not necessary:
-    symbolize_keys(covers)
+    covers
   end
 
   private

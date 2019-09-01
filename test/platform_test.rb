@@ -26,23 +26,18 @@ describe 'GamesDB - platforms', :vcr do
   describe 'platform_games' do
     before do
       platforms = Gamesdb.platforms
-      @games_by_id = Gamesdb.platform_games(platforms[0][:id])
-      @games_by_slug = Gamesdb.platform_games(platforms[0][:slug])
+      @games_by_id = Gamesdb.games_by_platform_id(platforms[0][:id])
     end
 
     it 'should return games in platform by id' do
       @games_by_id.count.wont_be :<, 0
-    end
-
-    it 'should return games in platform' do
-      @games_by_slug.count.wont_be :<, 0
     end
   end
 
   describe 'platform' do
     describe 'assigning basic info' do
       before do
-        @platform = Gamesdb.platform 6
+        @platform = Gamesdb.platform_by_id 6
       end
 
       it 'should return valid platform info' do
@@ -55,20 +50,11 @@ describe 'GamesDB - platforms', :vcr do
         @platform[:sound].must_be_kind_of String
         @platform[:display].must_be_kind_of String
       end
-
-      it 'should assign images if provided' do
-        images = @platform[:Images]
-        images[:boxart][1].must_equal 'platform/boxart/6-2.jpg'
-        images[:boxart].first[:width].must_equal '500'
-        images[:boxart].first[:height].must_equal '750'
-        images[:consoleart].must_equal 'platform/consoleart/6.png'
-        images[:controllerart].must_equal 'platform/controllerart/6.png'
-      end
     end
 
     describe 'without hardware or images' do
       before do
-        @platform = Gamesdb.platform 4916
+        @platform = Gamesdb.platform_by_id 4916
       end
 
       it 'should return valid platform info' do
@@ -80,16 +66,6 @@ describe 'GamesDB - platforms', :vcr do
         @platform[:memory].must_be_nil
         @platform[:sound].must_be_nil
         @platform[:display].must_be_nil
-      end
-
-      it 'should not fail hard if no images are provided' do
-        images = @platform[:Images]
-
-        images[:boxart][1].must_equal 'platform/boxart/4916-2.jpg'
-        images[:boxart].first[:width].must_equal '820'
-        images[:boxart].first[:height].must_equal '1080'
-        images[:consoleart].must_be_nil
-        images[:controllerart].must_be_nil
       end
     end
   end

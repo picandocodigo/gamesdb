@@ -3,7 +3,7 @@ require_relative './test_helper.rb'
 describe 'Gamesdb - games', :vcr do
   describe 'game' do
     before do
-      @game = Gamesdb.game(109)
+      @game = Gamesdb.game_by_id(109)
     end
 
     it 'should have a valid id' do
@@ -17,9 +17,19 @@ describe 'Gamesdb - games', :vcr do
     end
   end
 
-  describe 'games_list' do
+  describe 'empty game' do
     before do
-      @games_list = Gamesdb.games_list('turrican')
+      @game = Gamesdb.game_by_id(3)
+    end
+
+    it 'should return an empty array' do
+      @game.must_equal []
+    end
+  end
+
+  describe 'games by name' do
+    before do
+      @games_list = Gamesdb.games_by_name('turrican')
     end
 
     it 'should return a list' do
@@ -34,7 +44,7 @@ describe 'Gamesdb - games', :vcr do
   describe 'games art', :vcr do
     describe 'when most of the art is available' do
       before do
-        @images = Gamesdb.art('216')
+        @images = Gamesdb.game_images('216')
       end
 
       it 'should return logo and boxart' do
@@ -63,26 +73,13 @@ describe 'Gamesdb - games', :vcr do
 
     describe 'when some art is missing' do
       before do
-        @images = Gamesdb.art('65238')
+        @images = Gamesdb.game_images(65238)
       end
 
-      it 'should return logo and boxart' do
-        @images[:boxart].count.must_equal 0
-        @images[:logo].must_be_kind_of Array
-        @images[:logo].must_equal []
+      it 'should return an empty array' do
+        @images.must_be_kind_of Array
+        @images.must_equal []
       end
-
-      it 'should return screenshots' do
-        @images[:boxart].count.must_equal 0
-        @images[:logo].must_be_kind_of Array
-        @images[:logo].must_equal []
-      end
-
-      it 'should return fanart' do
-        @images[:boxart].count.must_equal 0
-        @images[:logo].must_be_kind_of Array
-        @images[:logo].must_equal []
-     end
     end
   end
 end
