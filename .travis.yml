@@ -3,9 +3,11 @@ env:
     - CC_TEST_REPORTER_ID=3ca09808c18a3fb0a12a7b113aeca064acf88831f8a36ee2e9fda89ca37b0650
 language: ruby
 rvm:
-  - 2.3.7
-  - 2.4.4
-  - 2.5.1
+  - 2.3.8
+  - 2.4.7
+  - 2.5.6
+  - 2.6.4
+  - jruby
 cache: bundler
 install: bundle install
 before_script:
