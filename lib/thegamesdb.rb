@@ -11,14 +11,15 @@ module Gamesdb
   # Method for listing platform's games
   # https://api.thegamesdb.net/#/operations/Games/GamesByPlatformID
   #
-  # Parameters: platform id (int)
+  # Parameters: platform id (int), page (int)
   #
   # == Returns:
   # Array of Hashes with games info
   #
-  def self.games_by_platform_id(platform_id)
+  def self.games_by_platform_id(platform_id, page = 1)
     url = 'Games/ByPlatformID'
-    data = json_response(url, id: platform_id)
+    params = {id: platform_id, page: page, include: 'boxart'}
+    data = json_response(url, params)
     process_platform_games(data)
   end
 
@@ -35,7 +36,7 @@ module Gamesdb
     data = json_response(url)
     platforms = []
 
-    data['platforms'].each do |p|
+    data['data']['platforms'].each do |p|
       platform = p.last
       platforms << { name: platform['name'], id: platform['id'].to_i, slug: platform['alias'] }
     end
@@ -60,7 +61,7 @@ module Gamesdb
     }
     data = json_response(url, params)
 
-    response = data['platforms'].values.first
+    response = data['data']['platforms'].values.first
     symbolize_keys(response)
   end
 
@@ -82,8 +83,8 @@ module Gamesdb
       include: 'boxart,platform'
     }
     data = json_response(url, params)
-    return [] if data["count"] == 0
-    symbolize_keys(data['games'].first)
+    return [] if data['data']['count'] == 0
+    symbolize_keys(data['data']['games'].first)
   end
 
   # The GetGamesList API search returns a listing of games matched up
@@ -100,7 +101,7 @@ module Gamesdb
   def self.games_by_name(name)
     url = 'Games/ByGameName'
     data = json_response(url, name: name)
-    data['games'].map { |game| symbolize_keys(game) }
+    data['data']['games'].map { |game| symbolize_keys(game) }
   end
 
   # This API feature returns a list of available artwork types and
@@ -120,14 +121,14 @@ module Gamesdb
   def self.game_images(id)
     url = 'Games/Images'
     data = json_response(url, games_id: id)
-    return [] if data['count'] == 0
+    return [] if data['data']['count'] == 0
 
     response = {}
-    response[:base_url] = data['base_url']['original']
-    response[:logo] = process_logo(data, id)
-    response[:boxart] = process_covers(data, id)
-    response[:screenshot] = process_screenshots(data, id)
-    response[:fanart] = process_fanart(data, id)
+    response[:base_url] = data['data']['base_url']['original']
+    response[:logo] = process_logo(data['data'], id)
+    response[:boxart] = process_covers(data['data'], id)
+    response[:screenshot] = process_screenshots(data['data'], id)
+    response[:fanart] = process_fanart(data['data'], id)
     response
   end
 
@@ -192,19 +193,23 @@ module Gamesdb
     uri.query = URI.encode_www_form(params)
     request = Net::HTTP.get_response(uri)
     response = JSON.parse(request.body)
-    response['data']
+    response
   end
 
   # Process games for platform_games
   def self.process_platform_games(data)
     games = []
 
-    data['games'].each do |elem|
+    data['data']['games'].each do |elem|
       name = elem['game_title']
       id = elem['id']
       date = elem['release_date']
       developers = elem['developers']
-      games << { name: name, id: id, release_date: date, developers: developers }
+      if boxart = data.dig('include', 'boxart', 'data', id.to_s)
+        image = data['include']['boxart']['base_url']['original'] +
+          boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
+      end
+      games << { name: name, id: id, release_date: date, developers: developers, image: image }
     end
     games
   end

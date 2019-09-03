@@ -26,12 +26,21 @@ describe 'GamesDB - platforms', :vcr do
   describe 'platform_games' do
     before do
       platforms = Gamesdb.platforms
-      @games_by_id = Gamesdb.games_by_platform_id(platforms[0][:id])
+      @first_page = Gamesdb.games_by_platform_id(platforms[0][:id])
+      @second_page = Gamesdb.games_by_platform_id(platforms[0][:id], 2)
     end
 
     it 'should return games in platform by id' do
-      @games_by_id.count.wont_be :<, 0
+      @first_page.count.wont_be :<, 0
+      @first_page.count.must_equal 20
     end
+
+    it 'should return games in the platform for the second page' do
+      @second_page.count.wont_be :<, 0
+      @second_page.count.must_equal 20
+      (@first_page & @second_page).must_equal []
+    end
+
   end
 
   describe 'platform' do
