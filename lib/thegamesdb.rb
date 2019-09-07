@@ -222,21 +222,6 @@ module Gamesdb
     game
   end
 
-  # Method for processing the fan art and screenshots into a uniform
-  # collection with url, width, height and thumb url
-  def self.images_from_nodes(data)
-    images = []
-    data.each do |art|
-      images << {
-        url: art.original.nodes[0],
-        width: art.nodes.first.attributes[:width],
-        height: art.nodes.first.attributes[:height],
-        thumb: art.thumb.text
-      }
-    end
-    images
-  end
-
   def self.symbolize_keys(hash)
     hash.keys.each do |key|
       hash[key.to_sym] = hash.delete(key)
