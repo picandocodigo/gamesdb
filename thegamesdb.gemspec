@@ -25,4 +25,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'vcr', '~> 4'
   spec.add_development_dependency 'webmock'
+  spec.metadata      = {
+    "bug_tracker_uri"   => "https://github.com/picandocodigo/gamesdb/issues",
+    "changelog_uri"     => "https://github.com/picandocodigo/gamesdb/blob/master/CHANGELOG.md",
+    "documentation_uri" => "https://github.com/picandocodigo/gamesdb/blob/master/README.md#gamesdb",
+    "homepage_uri"      => "https://github.com/picandocodigo/gamesdb",
+    "source_code_uri"   => "https://github.com/picandocodigo/gamesdb",
+  }
 end
