@@ -62,7 +62,7 @@ describe 'GamesDB - platforms', :vcr do
   describe 'platform' do
     describe 'assigning basic info' do
       before do
-        @platform = Gamesdb.platform_by_id 6
+        @platform = Gamesdb.platform_by_id(6)
       end
 
       it 'should return valid platform info' do

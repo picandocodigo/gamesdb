@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+* Adds `page` parameter to `games_by_platform_id` and includes `boxart`.
+* Adds all available fields from Platforms in `platforms`, updates tests. Changes `:slug` to `:alias` in platforms response, to map to same response from API.
+* Refactored `json_response` to use `includes` and extra data from the API response.
+
+
 ## 1.0.0
 
 * Updated to new API endpoint, API key is now required to use the gem. Request an API Key here: https://forums.thegamesdb.net/viewforum.php?f=10
