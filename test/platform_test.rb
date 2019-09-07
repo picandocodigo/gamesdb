@@ -8,6 +8,7 @@ describe 'GamesDB - platforms', :vcr do
 
     it 'should get gaming platforms' do
       @platforms.count.wont_be :<, 0
+      @platforms.count.must_equal 109
     end
 
     it 'should have a valid name' do
@@ -18,8 +19,23 @@ describe 'GamesDB - platforms', :vcr do
       @platforms[0][:id].must_be_kind_of Integer
     end
 
-    it 'should have a valid slug' do
-      @platforms[0][:slug].must_be_kind_of String
+    it 'should have a valid alias' do
+      @platforms[0][:alias].must_be_kind_of String
+    end
+
+    it 'should have valid fields for other stuff' do
+      nes = @platforms.select { |p| p[:id] == 7 }.first
+      nes[:icon].must_be_kind_of String
+      nes[:console].must_be_kind_of String
+      nes[:controller].must_be_kind_of String
+      nes[:developer].must_be_kind_of String
+      nes[:manufacturer].must_be_kind_of String
+      nes[:maxcontrollers].must_be_kind_of String
+      nes[:cpu].must_be_kind_of String
+      nes[:memory].must_be_kind_of String
+      nes[:sound].must_be_kind_of String
+      nes[:display].must_be_kind_of String
+      nes[:overview].must_be_kind_of String
     end
   end
 

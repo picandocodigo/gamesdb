@@ -33,14 +33,12 @@ module Gamesdb
   #
   def self.platforms
     url = 'Platforms'
-    data = json_response(url)
-    platforms = []
+    params = { fields: 'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,display,overview,youtube' }
+    data = json_response(url, params)
 
-    data['data']['platforms'].each do |p|
-      platform = p.last
-      platforms << { name: platform['name'], id: platform['id'].to_i, slug: platform['alias'] }
+    data['data']['platforms'].map do |p|
+      symbolize_keys(p.last)
     end
-    platforms
   end
 
   # This API feature returns a set of metadata and artwork data for a
