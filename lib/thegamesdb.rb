@@ -237,14 +237,6 @@ module Gamesdb
     games
   end
 
-  def self.process_game(game)
-    game[:id] = game[:id].to_i
-    game[:name] = game.delete(:GameTitle)
-    game[:title] = game[:name]
-    game[:platform] = game.delete(:Platform)
-    game
-  end
-
   def self.symbolize_keys(hash)
     hash.keys.each do |key|
       hash[key.to_sym] = hash.delete(key)
