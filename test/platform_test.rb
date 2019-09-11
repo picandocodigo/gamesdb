@@ -39,7 +39,7 @@ describe 'GamesDB - platforms', :vcr do
     end
   end
 
-  describe 'platform_games' do
+  describe 'platform_games pages' do
     before do
       platforms = Gamesdb.platforms
       @first_page = Gamesdb.games_by_platform_id(platforms[0][:id])
@@ -56,7 +56,6 @@ describe 'GamesDB - platforms', :vcr do
       @second_page.count.must_equal 20
       (@first_page & @second_page).must_equal []
     end
-
   end
 
   describe 'platform' do

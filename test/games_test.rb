@@ -41,6 +41,24 @@ describe 'Gamesdb - games', :vcr do
     end
   end
 
+  describe 'games by name pages' do
+    before do
+      @first_page = Gamesdb.games_by_name('mario', page: 1)
+      @second_page = Gamesdb.games_by_name('mario', page: 2)
+    end
+
+    it 'should return games in platform by id' do
+      @first_page.count.wont_be :<, 0
+      @first_page.count.must_equal 20
+    end
+
+    it 'should return games in the platform for the second page' do
+      @second_page.count.wont_be :<, 0
+      @second_page.count.must_equal 20
+      (@first_page & @second_page).must_equal []
+    end
+  end
+
   describe 'games by name and platform' do
     before do
       @games_list = Gamesdb.games_by_name('mario', platform: 7)

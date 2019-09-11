@@ -9,6 +9,7 @@ module Gamesdb
   IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'.freeze
 
   # Method for listing platform's games
+  # TODO: check (and test) that we support ',' delimited list
   # https://api.thegamesdb.net/#/operations/Games/GamesByPlatformID
   #
   # Parameters: platform id (int), page (int)
@@ -64,7 +65,7 @@ module Gamesdb
   end
 
   # Method for getting game info
-  # TODO: name and platform parameters (for search)
+  # TODO: check (and test) that we support ',' delimited list
   # https://api.thegamesdb.net/#/operations/Games/GamesByGameID
   #
   # Parameters:
@@ -92,17 +93,19 @@ module Gamesdb
   # Parameters:
   # - name (required)
   # - platform (optional - platform id)
+  # - page (optional)
   #
   # == Returns:
   # Hash with game info:  id, name (not-unique), release_date,
   # platform, etc.
   #
-  def self.games_by_name(name, platform: nil)
+  def self.games_by_name(name, platform: nil, page: 1)
     url = 'Games/ByGameName'
     params = {
       fields: 'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates',
       include: 'boxart',
-      name: name
+      name: name,
+      page: page
     }
     unless platform.nil?
       params.merge!("filter[platform]" => platform)
