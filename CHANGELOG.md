@@ -1,10 +1,15 @@
 # Changelog
 
+## 1.1.1
+* Adds `platform_id` parameter to `games_by_name`
+* Adds `page` parameter to `games_by_name`
+* Adds extra fields and boxart to `games_by_name` response
+* Refactors `process_platform_games`
+
 ## 1.1.0
 * Adds `page` parameter to `games_by_platform_id` and includes `boxart`.
 * Adds all available fields from Platforms in `platforms`, updates tests. Changes `:slug` to `:alias` in platforms response, to map to same response from API.
 * Refactored `json_response` to use `includes` and extra data from the API response.
-
 
 ## 1.0.0
 
