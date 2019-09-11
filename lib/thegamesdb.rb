@@ -91,15 +91,25 @@ module Gamesdb
   #
   # Parameters:
   # - name (required)
+  # - platform (optional - platform id)
   #
   # == Returns:
   # Hash with game info:  id, name (not-unique), release_date,
-  # platform
+  # platform, etc.
   #
-  def self.games_by_name(name)
+  def self.games_by_name(name, platform: nil)
     url = 'Games/ByGameName'
-    data = json_response(url, name: name)
-    data['data']['games'].map { |game| symbolize_keys(game) }
+    params = {
+      fields: 'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates',
+      include: 'boxart',
+      name: name
+    }
+    unless platform.nil?
+      params.merge!("filter[platform]" => platform)
+    end
+
+    data = json_response(url, params)
+    process_platform_games(data)
   end
 
   # This API feature returns a list of available artwork types and
@@ -119,7 +129,7 @@ module Gamesdb
   def self.game_images(id)
     url = 'Games/Images'
     data = json_response(url, games_id: id)
-    return [] if data['data']['count'] == 0
+    return [] if data.dig('data', 'count') == (0 || nil)
 
     response = {}
     response[:base_url] = data['data']['base_url']['original']
@@ -199,15 +209,27 @@ module Gamesdb
     games = []
 
     data['data']['games'].each do |elem|
-      name = elem['game_title']
       id = elem['id']
-      date = elem['release_date']
-      developers = elem['developers']
-      if boxart = data.dig('include', 'boxart', 'data', id.to_s)
-        image = data['include']['boxart']['base_url']['original'] +
-          boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
-      end
-      games << { name: name, id: id, release_date: date, developers: developers, image: image }
+      games << {
+        name: elem['game_title'],
+        id: id,
+        release_date: elem['release_date'],
+        platform: elem['platform'],
+        developers: elem['developers'],
+        players: elem['players'],
+        publishers: elem['publishers'],
+        genres: elem['genres'],
+        overview: elem['overview'],
+        last_updated: elem['last_updated'],
+        rating: elem['rating'],
+        coop: elem['coop'],
+        youtube: elem['youtube'],
+        alternates: elem['alternates'],
+        image: if boxart = data.dig('include', 'boxart', 'data', id.to_s)
+                 data['include']['boxart']['base_url']['original'] +
+                   boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
+               end
+    }
     end
     games
   end

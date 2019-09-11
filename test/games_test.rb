@@ -35,9 +35,24 @@ describe 'Gamesdb - games', :vcr do
     it 'should return a list' do
       game = @games_list.first
       game[:id].must_be_kind_of Integer
-      game[:game_title].must_be_kind_of String
+      game[:name].must_be_kind_of String
       game[:platform].must_be_kind_of Integer
       game[:release_date].must_be_kind_of String
+    end
+  end
+
+  describe 'games by name and platform' do
+    before do
+      @games_list = Gamesdb.games_by_name('mario', platform: 7)
+    end
+
+    it 'should return a list' do
+      @games_list.each do |game|
+        game[:id].must_be_kind_of Integer
+        game[:id].must_be_kind_of Integer
+        game[:name].must_be_kind_of String
+        game[:platform].must_equal 7
+      end
     end
   end
 
