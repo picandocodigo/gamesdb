@@ -78,6 +78,13 @@ Gamesdb.games_by_platform_id(7)
  => [{:name=>"Donkey Kong", :id=>5, :release_date=>"1982-01-01", :developers=>[6037]}, {:name=>"Bionic Commando", :id=>76, :release_date=>"1988-12-06", :developers=>[1436]}, {:name=>"Super Mario Bros. 3", :id=>112, :release_date=>"1990-02-12", :developers=>[6055]}, {:name=>"The Legend of Zelda", :id=>113, :release_date=>"1987-07-01", :developers=>[6055]}, {:name=>"Kirby's Adventure", :id=>121, :release_date=>"1993-03-26", :developers=>[3694]}, {:name=>"Metroid", :id=>123, :release_date=>"1987-08-15", :developers=>[6051]}, {:name=>"Mega Man 5", :id=>125, :release_date=>"1992-12-04", :developers=>[1436]}, {:name=>"Kid Icarus", :id=>130, :release_date=>"1986-12-18", :developers=>[6037]}, {:name=>"Lemmings", :id=>133, :release_date=>"1991-02-14", :developers=>[2404]}, {:name=>"Castlevania", :id=>135, :release_date=>"1987-05-01", :developers=>[4765]}, {:name=>"Super Mario Bros.", :id=>140, :release_date=>"1985-09-13", :developers=>[6042]}, ...
  ]
 ```
+
+Supports comma delimited list:
+
+```ruby
+Gamesdb.games_by_platform_id("4950,4948")
+```
+
 - [x] /Games/Images
 
 Usage:

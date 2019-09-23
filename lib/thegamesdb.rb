@@ -9,7 +9,6 @@ module Gamesdb
   IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'.freeze
 
   # Method for listing platform's games
-  # TODO: check (and test) that we support ',' delimited list
   # https://api.thegamesdb.net/#/operations/Games/GamesByPlatformID
   #
   # Parameters: platform id (int), page (int)

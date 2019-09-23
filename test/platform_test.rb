@@ -39,7 +39,7 @@ describe 'GamesDB - platforms', :vcr do
     end
   end
 
-  describe 'platform_games pages' do
+  describe 'games by platform' do
     before do
       platforms = Gamesdb.platforms
       @first_page = Gamesdb.games_by_platform_id(platforms[0][:id])
@@ -56,6 +56,23 @@ describe 'GamesDB - platforms', :vcr do
       @second_page.count.must_equal 20
       (@first_page & @second_page).must_equal []
     end
+  end
+
+  describe 'games by platform parameters' do
+    before do
+      @games1 = Gamesdb.games_by_platform_id(4950)
+      @games2 = Gamesdb.games_by_platform_id(4948)
+      @games3 = Gamesdb.games_by_platform_id("4950,4948")
+    end
+
+    it 'supports comma separated list' do
+      @games1.count.must_equal 20
+      @games2.count.must_equal 1
+      @games3.count.must_equal 20
+
+      (@games3 - @games1).must_equal @games2
+    end
+
   end
 
   describe 'platform' do
