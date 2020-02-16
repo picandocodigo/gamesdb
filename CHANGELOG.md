@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.2
+* Internal changes: update API endpoint url (adds `v1`), update tests
+
 ## 1.1.1
 * Adds `platform_id` parameter to `games_by_name`
 * Adds `page` parameter to `games_by_name`
