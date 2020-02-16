@@ -8,7 +8,7 @@ describe 'GamesDB - platforms', :vcr do
 
     it 'should get gaming platforms' do
       @platforms.count.wont_be :<, 0
-      @platforms.count.must_equal 109
+      @platforms.count.must_equal 110
     end
 
     it 'should have a valid name' do

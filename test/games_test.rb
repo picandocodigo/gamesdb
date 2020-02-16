@@ -110,8 +110,7 @@ describe 'Gamesdb - games', :vcr do
       end
 
       it 'should return an empty array' do
-        @images.must_be_kind_of Array
-        @images.must_equal []
+        @images.must_be_kind_of Hash
       end
     end
   end

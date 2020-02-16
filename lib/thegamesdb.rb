@@ -5,15 +5,16 @@ require 'json'
 
 # Client for TheGamesDB API (thegamesdb.net)
 module Gamesdb
-  BASE_URL = 'https://api.thegamesdb.net/'.freeze
+  BASE_URL = 'https://api.thegamesdb.net/v1/'.freeze
   IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'.freeze
 
   # Method for listing platform's games
-  # https://api.thegamesdb.net/#/operations/Games/GamesByPlatformID
+  #
+  # See: https://api.thegamesdb.net/#/operations/Games/GamesByPlatformID
   #
   # Parameters: platform id (int), page (int)
   #
-  # == Returns:
+  # = Returns:
   # Array of Hashes with games info
   #
   def self.games_by_platform_id(platform_id, page = 1)
