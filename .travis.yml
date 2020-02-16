@@ -19,3 +19,7 @@ script:
   - bundle exec rake test
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+jobs:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: truffleruby
