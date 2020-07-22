@@ -77,7 +77,7 @@ describe 'Gamesdb - games', :vcr do
   describe 'games art', :vcr do
     describe 'when most of the art is available' do
       before do
-        @images = Gamesdb.game_images('216')
+        @images = Gamesdb.game_images('218')
       end
 
       it 'should return logo and boxart' do

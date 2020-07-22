@@ -8,7 +8,7 @@ describe 'GamesDB - platforms', :vcr do
 
     it 'should get gaming platforms' do
       expect(@platforms.count).wont_be :<, 0
-      expect(@platforms.count).must_equal 110
+      expect(@platforms.count).must_equal 114
     end
 
     it 'should have a valid name' do
