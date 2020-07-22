@@ -7,13 +7,13 @@ describe 'Gamesdb - games', :vcr do
     end
 
     it 'should have a valid id' do
-      @game[:id].must_be_kind_of Integer
-      @game[:id].must_equal 109
+      expect(@game[:id]).must_be_kind_of Integer
+      expect(@game[:id]).must_equal 109
     end
 
     it 'should have valid fields' do
-      @game[:game_title].must_be_kind_of String
-      @game[:game_title].length.wont_be :<, 0
+      expect(@game[:game_title]).must_be_kind_of String
+      expect(@game[:game_title].length).wont_be :<, 0
     end
   end
 
@@ -23,7 +23,7 @@ describe 'Gamesdb - games', :vcr do
     end
 
     it 'should return an empty array' do
-      @game.must_equal []
+      expect(@game).must_equal []
     end
   end
 
@@ -34,10 +34,10 @@ describe 'Gamesdb - games', :vcr do
 
     it 'should return a list' do
       game = @games_list.first
-      game[:id].must_be_kind_of Integer
-      game[:name].must_be_kind_of String
-      game[:platform].must_be_kind_of Integer
-      game[:release_date].must_be_kind_of String
+      expect(game[:id]).must_be_kind_of Integer
+      expect(game[:name]).must_be_kind_of String
+      expect(game[:platform]).must_be_kind_of Integer
+      expect(game[:release_date]).must_be_kind_of String
     end
   end
 
@@ -48,14 +48,14 @@ describe 'Gamesdb - games', :vcr do
     end
 
     it 'should return games in platform by id' do
-      @first_page.count.wont_be :<, 0
-      @first_page.count.must_equal 20
+      expect(@first_page.count).wont_be :<, 0
+      expect(@first_page.count).must_equal 20
     end
 
     it 'should return games in the platform for the second page' do
-      @second_page.count.wont_be :<, 0
-      @second_page.count.must_equal 20
-      (@first_page & @second_page).must_equal []
+      expect(@second_page.count).wont_be :<, 0
+      expect(@second_page.count).must_equal 20
+      expect(@first_page & @second_page).must_equal []
     end
   end
 
@@ -66,10 +66,10 @@ describe 'Gamesdb - games', :vcr do
 
     it 'should return a list' do
       @games_list.each do |game|
-        game[:id].must_be_kind_of Integer
-        game[:id].must_be_kind_of Integer
-        game[:name].must_be_kind_of String
-        game[:platform].must_equal 7
+        expect(game[:id]).must_be_kind_of Integer
+        expect(game[:id]).must_be_kind_of Integer
+        expect(game[:name]).must_be_kind_of String
+        expect(game[:platform]).must_equal 7
       end
     end
   end
@@ -81,26 +81,26 @@ describe 'Gamesdb - games', :vcr do
       end
 
       it 'should return logo and boxart' do
-        @images[:boxart].count.wont_be :<, 0
-        @images[:logo].must_be_kind_of String
-        @images[:boxart][:front][:url].must_be_kind_of String
-        @images[:boxart][:front][:width].must_be_kind_of String
-        @images[:boxart][:front][:height].must_be_kind_of String
-        @images[:boxart][:front][:resolution].must_be_kind_of String
+        expect(@images[:boxart].count).wont_be :<, 0
+        expect(@images[:logo]).must_be_kind_of String
+        expect(@images[:boxart][:front][:url]).must_be_kind_of String
+        expect(@images[:boxart][:front][:width]).must_be_kind_of String
+        expect(@images[:boxart][:front][:height]).must_be_kind_of String
+        expect(@images[:boxart][:front][:resolution]).must_be_kind_of String
       end
 
       it 'should return screenshots' do
-        @images[:screenshot].count.wont_be :<, 0
-        @images[:screenshot].first.must_be_kind_of Hash
-        @images[:screenshot].first[:filename].must_be_kind_of String
+        expect(@images[:screenshot].count).wont_be :<, 0
+        expect(@images[:screenshot].first).must_be_kind_of Hash
+        expect(@images[:screenshot].first[:filename]).must_be_kind_of String
       end
 
       it 'should return fanart' do
-        @images[:fanart].count.wont_be :<, 0
-        @images[:fanart].first[:url].must_be_kind_of String
-        @images[:fanart].first[:width].must_be_kind_of String
-        @images[:fanart].first[:height].must_be_kind_of String
-        @images[:fanart].first[:resolution].must_be_kind_of String
+        expect(@images[:fanart].count).wont_be :<, 0
+        expect(@images[:fanart].first[:url]).must_be_kind_of String
+        expect(@images[:fanart].first[:width]).must_be_kind_of String
+        expect(@images[:fanart].first[:height]).must_be_kind_of String
+        expect(@images[:fanart].first[:resolution]).must_be_kind_of String
       end
     end
 
@@ -110,7 +110,7 @@ describe 'Gamesdb - games', :vcr do
       end
 
       it 'should return an empty array' do
-        @images.must_be_kind_of Hash
+        expect(@images).must_be_kind_of Hash
       end
     end
   end

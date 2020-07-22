@@ -7,35 +7,35 @@ describe 'GamesDB - platforms', :vcr do
     end
 
     it 'should get gaming platforms' do
-      @platforms.count.wont_be :<, 0
-      @platforms.count.must_equal 110
+      expect(@platforms.count).wont_be :<, 0
+      expect(@platforms.count).must_equal 110
     end
 
     it 'should have a valid name' do
-      @platforms[0][:name].must_be_kind_of String
+      expect(@platforms[0][:name]).must_be_kind_of String
     end
 
     it 'should have a valid id' do
-      @platforms[0][:id].must_be_kind_of Integer
+      expect(@platforms[0][:id]).must_be_kind_of Integer
     end
 
     it 'should have a valid alias' do
-      @platforms[0][:alias].must_be_kind_of String
+      expect(@platforms[0][:alias]).must_be_kind_of String
     end
 
     it 'should have valid fields for other stuff' do
       nes = @platforms.select { |p| p[:id] == 7 }.first
-      nes[:icon].must_be_kind_of String
-      nes[:console].must_be_kind_of String
-      nes[:controller].must_be_kind_of String
-      nes[:developer].must_be_kind_of String
-      nes[:manufacturer].must_be_kind_of String
-      nes[:maxcontrollers].must_be_kind_of String
-      nes[:cpu].must_be_kind_of String
-      nes[:memory].must_be_kind_of String
-      nes[:sound].must_be_kind_of String
-      nes[:display].must_be_kind_of String
-      nes[:overview].must_be_kind_of String
+      expect(nes[:icon]).must_be_kind_of String
+      expect(nes[:console]).must_be_kind_of String
+      expect(nes[:controller]).must_be_kind_of String
+      expect(nes[:developer]).must_be_kind_of String
+      expect(nes[:manufacturer]).must_be_kind_of String
+      expect(nes[:maxcontrollers]).must_be_kind_of String
+      expect(nes[:cpu]).must_be_kind_of String
+      expect(nes[:memory]).must_be_kind_of String
+      expect(nes[:sound]).must_be_kind_of String
+      expect(nes[:display]).must_be_kind_of String
+      expect(nes[:overview]).must_be_kind_of String
     end
   end
 
@@ -47,14 +47,14 @@ describe 'GamesDB - platforms', :vcr do
     end
 
     it 'should return games in platform by id' do
-      @first_page.count.wont_be :<, 0
-      @first_page.count.must_equal 20
+      expect(@first_page.count).wont_be :<, 0
+      expect(@first_page.count).must_equal 20
     end
 
     it 'should return games in the platform for the second page' do
-      @second_page.count.wont_be :<, 0
-      @second_page.count.must_equal 20
-      (@first_page & @second_page).must_equal []
+      expect(@second_page.count).wont_be :<, 0
+      expect(@second_page.count).must_equal 20
+      expect(@first_page & @second_page).must_equal []
     end
   end
 
@@ -66,11 +66,11 @@ describe 'GamesDB - platforms', :vcr do
     end
 
     it 'supports comma separated list' do
-      @games1.count.must_equal 20
-      @games2.count.must_equal 1
-      @games3.count.must_equal 20
+      expect(@games1.count).must_equal 20
+      expect(@games2.count).must_equal 1
+      expect(@games3.count).must_equal 20
 
-      (@games3 - @games1).must_equal @games2
+      expect(@games3 - @games1).must_equal @games2
     end
 
   end
@@ -82,14 +82,14 @@ describe 'GamesDB - platforms', :vcr do
       end
 
       it 'should return valid platform info' do
-        @platform[:name].must_equal 'Super Nintendo (SNES)'
-        @platform[:overview].must_be_kind_of String
-        @platform[:developer].must_be_kind_of String
-        @platform[:manufacturer].must_equal 'Nintendo'
-        @platform[:cpu].must_be_kind_of String
-        @platform[:memory].must_be_kind_of String
-        @platform[:sound].must_be_kind_of String
-        @platform[:display].must_be_kind_of String
+        expect(@platform[:name]).must_equal 'Super Nintendo (SNES)'
+        expect(@platform[:overview]).must_be_kind_of String
+        expect(@platform[:developer]).must_be_kind_of String
+        expect(@platform[:manufacturer]).must_equal 'Nintendo'
+        expect(@platform[:cpu]).must_be_kind_of String
+        expect(@platform[:memory]).must_be_kind_of String
+        expect(@platform[:sound]).must_be_kind_of String
+        expect(@platform[:display]).must_be_kind_of String
       end
     end
 
@@ -99,14 +99,14 @@ describe 'GamesDB - platforms', :vcr do
       end
 
       it 'should return valid platform info' do
-        @platform[:name].must_equal 'Android'
-        @platform[:overview].must_be_kind_of String
-        @platform[:developer].must_be_kind_of String
-        @platform[:manufacturer].must_be_nil
-        @platform[:cpu].must_be_nil
-        @platform[:memory].must_be_nil
-        @platform[:sound].must_be_nil
-        @platform[:display].must_be_nil
+        expect(@platform[:name]).must_equal 'Android'
+        expect(@platform[:overview]).must_be_kind_of String
+        expect(@platform[:developer]).must_be_kind_of String
+        expect(@platform[:manufacturer]).must_be_nil
+        expect(@platform[:cpu]).must_be_nil
+        expect(@platform[:memory]).must_be_nil
+        expect(@platform[:sound]).must_be_nil
+        expect(@platform[:display]).must_be_nil
       end
     end
   end
