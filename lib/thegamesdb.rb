@@ -198,7 +198,9 @@ module Gamesdb
 
   # Api call and xml parsing
   def self.json_response(url, params = {})
-    params = params.merge({apikey: configuration.api_key})
+    raise ArgumentError, 'You need to set the API KEY to use the GamesDB API' unless configuration.api_key
+
+    params = params.merge({ apikey: configuration.api_key })
 
     uri = URI(BASE_URL + url)
     uri.query = URI.encode_www_form(params)

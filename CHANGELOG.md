@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0
+- Raise ArgumentError if api key isn't present
+
 ## 1.1.2
 * Internal changes: update API endpoint url (adds `v1`), update tests
 
