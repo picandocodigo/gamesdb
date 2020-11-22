@@ -17,17 +17,15 @@ module Gamesdb
     end
 
     # Method for getting game info
-    # TODO: check (and test) that we support ',' delimited list
     #
     # @see https://api.thegamesdb.net/#/Games/GamesByGameID
     #
-    # @param id [Integer|Array] Game id
+    # @param id [Integer|String] Game id or string of ',' delimited list
     #
     # @return [Array|Hash] Hash with game info
     #
     def games_by_id(id)
       url = 'Games/ByGameID'
-      id = id.join(',') if id.is_a? Array
       params = {
         id: id,
         fields: 'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates',
