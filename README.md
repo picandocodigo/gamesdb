@@ -8,17 +8,15 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
 [![Maintainability](https://api.codeclimate.com/v1/badges/2dcf3cdcbe37adcea569/maintainability)](https://codeclimate.com/github/picandocodigo/gamesdb/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2dcf3cdcbe37adcea569/test_coverage)](https://codeclimate.com/github/picandocodigo/gamesdb/test_coverage)
 
-* [Installation](#installation)
+* [Installation and Quick Start](#installation-and-quick-start)
 * [Usage](#usage)
 * [Development](#development)
 * [Contributing](#contributing)
 
 
-## Installation
+## Installation and Quick Start
 
-This gem requires Ruby version 2.3 or more.
-
-Add this line to your application's Gemfile:
+This gem requires Ruby version 2.3 or more. Add this line to your application's Gemfile:
 
     gem 'thegamesdb'
 
@@ -30,10 +28,11 @@ Or install it in your system with:
 
     $ gem install thegamesdb
 
-Request an API Key [here](https://forums.thegamesdb.net/viewforum.php?f=10). Set the API key in your env variables:
+To use this library, you'll need to request an API Key [here](https://forums.thegamesdb.net/viewforum.php?f=10). Once you have an API KEY, you can instantiate a Client:
 
-```
-GAMESDB_API_KEY='your_api_key'
+```ruby
+> client = Gamesdb::Client.new('<API_KEY>')
+> response = client.platforms
 ```
 
 ## Usage
@@ -47,7 +46,7 @@ The full documentation for the API is available [here](API Documentation: https:
 Usage:
 
 ```ruby
-> Gamesdb.game_by_id(6177)
+> client.games_by_id(6177)
  => {
   :id=>6177,
   :game_title=>"Super Turrican",
@@ -77,7 +76,7 @@ Usage:
 Usage:
 
 ```ruby
-> Gamesdb.games_by_name("Mario Kart")
+> client.games_by_name("Mario Kart")
  => [
    {:id=>266, :game_title=>"Mario Kart 64", :release_date=>"1997-02-10", :platform=>3, :developers=>[6037]}, 
    {:id=>47050, :game_title=>"Mario Kart 64", :release_date=>"2016-12-29", :platform=>38, :developers=>[6037]}, 
@@ -94,7 +93,7 @@ Usage:
 Usage:
 
 ```ruby
-Gamesdb.games_by_platform_id(7)
+client.games_by_platform_id(7)
  => [
    {:name=>"Donkey Kong", :id=>5, :release_date=>"1982-01-01", :developers=>[6037]}, 
    {:name=>"Bionic Commando", :id=>76, :release_date=>"1988-12-06", :developers=>[1436]}, 
@@ -113,7 +112,7 @@ Gamesdb.games_by_platform_id(7)
 Supports comma delimited list:
 
 ```ruby
-Gamesdb.games_by_platform_id("4950,4948")
+> client.games_by_platform_id("4950,4948")
 ```
 
 - **[/Games/Images](https://api.thegamesdb.net/#/Games/GamesImages)**
@@ -121,7 +120,7 @@ Gamesdb.games_by_platform_id("4950,4948")
 Usage:
 
 ```ruby
-> Gamesdb.game_images(121)
+> client.games_images(121)
  => {
    :base_url=>"https://cdn.thegamesdb.net/images/original/",
    :logo=>"clearlogo/121.png",
@@ -148,8 +147,8 @@ Usage:
 
 Usage:
 ```ruby
-Gamesdb.platforms                                                                           
- => [
+> client.platforms
+=> [
  {:name=>"3DO", :id=>25, :slug=>"3do"},
  {:name=>"Acorn Archimedes", :id=>4944, :slug=>"acorn-archimedes"},
  {:name=>"Acorn Electron", :id=>4954, :slug=>"acorn-electron"},
@@ -164,7 +163,7 @@ Gamesdb.platforms
 
 Usage:
 ```ruby
-> Gamesdb.platform_by_id(7)
+> client.platform_by_id(7)
  => {
    :id=>7,
    :name=>"Nintendo Entertainment System (NES)",
