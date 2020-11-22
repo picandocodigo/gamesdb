@@ -20,9 +20,11 @@ module Gamesdb
     #
     # @see https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformID
     #
-    # @param id [Integer] The numeric ID of the platform in the GamesDB database
+    # @param id [Integer|String] The numeric ID of the platform in the GamesDB
+    # database or a String with comma delimited list of Ids.
     #
-    # @return [Hash] Hash with platform information
+    # @return [Hash|Array] Returns a Hash when there's one result or an Array of
+    # Hashes when there's more than one
     #
     def platforms_by_id(id)
       url = 'Platforms/ByPlatformID'
@@ -35,7 +37,14 @@ module Gamesdb
       platform_api_response(data)
     end
 
-    # Returns platforms by name
+    # Fetches platforms by name
+    #
+    # @see https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformName
+    #
+    # @param name [String] Platform name (Required)
+    #
+    # @return [Hash|Array] Returns a Hash when there's one result or an Array of
+    # Hashes when there's more than one
     def platforms_by_name(name)
       url = 'Platforms/ByPlatformName'
       params = {
@@ -47,6 +56,8 @@ module Gamesdb
       platform_api_response(data)
     end
 
+    # Auxiliary method to return either one hash when there's only one result or
+    # an Array of Hashes for several results
     def platform_api_response(data)
       return [] if data['data']['count'].zero?
 
