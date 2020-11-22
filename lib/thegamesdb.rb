@@ -10,12 +10,12 @@ module Gamesdb
 
   # Method for listing platform's games
   #
-  # See: https://api.thegamesdb.net/#/operations/Games/GamesByPlatformID
+  # @see https://api.thegamesdb.net/#/Games/GamesByPlatformID
   #
-  # Parameters: platform id (int), page (int)
+  # @param id [Integer]
+  # @param page [Integer]
   #
-  # = Returns:
-  # Array of Hashes with games info
+  # @return [Array] Array of Hashes with games info
   #
   def self.games_by_platform_id(platform_id, page = 1)
     url = 'Games/ByPlatformID'
@@ -25,12 +25,10 @@ module Gamesdb
   end
 
   # Method for listing platforms
-  # https://api.thegamesdb.net/#/operations/Platforms/Platforms
   #
-  # Parameters: none
+  # @see https://api.thegamesdb.net/#/Platforms/Platforms
   #
-  # == Returns:
-  # Array of Hashes with platforms info
+  # @return [Array] Array of Hashes with platforms info
   #
   def self.platforms
     url = 'Platforms'
@@ -42,15 +40,13 @@ module Gamesdb
     end
   end
 
-  # This API feature returns a set of metadata and artwork data for a
-  # specified Platform ID.
-  # https://api.thegamesdb.net/#/operations/Platforms/PlatformsByPlatformID
+  # This API feature returns a set of metadata and artwork data for a specified Platform ID.
   #
-  # Parameters:
-  #  - id - (int) The numeric ID of the platform in the GamesDB database
+  # @see https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformID
   #
-  # == Returns:
-  # Hash with platform info
+  # @param id [Integer] The numeric ID of the platform in the GamesDB database
+  #
+  # @return [Hash] Hash with platform information
   #
   def self.platform_by_id(id)
     url = 'Platforms/ByPlatformID'
@@ -66,13 +62,12 @@ module Gamesdb
 
   # Method for getting game info
   # TODO: check (and test) that we support ',' delimited list
-  # https://api.thegamesdb.net/#/operations/Games/GamesByGameID
   #
-  # Parameters:
-  #  - id - (int) Game id
+  # @see https://api.thegamesdb.net/#/Games/GamesByGameID
   #
-  # == Returns:
-  # Hash with game info
+  # @param id [Integer] Game id
+  #
+  # @return [Hash] Hash with game info
   #
   def self.game_by_id(id)
     url = 'Games/ByGameID'
@@ -86,18 +81,15 @@ module Gamesdb
     symbolize_keys(data['data']['games'].first)
   end
 
-  # The GetGamesList API search returns a listing of games matched up
-  # with loose search terms.
-  # https://api.thegamesdb.net/#/operations/Games/GamesByGameName
+  # The GetGamesList API search returns a listing of games matched up with loose search terms.
   #
-  # Parameters:
-  # - name (required)
-  # - platform (optional - platform id)
-  # - page (optional)
+  # @see https://api.thegamesdb.net/#/Games/GamesByGameName
   #
-  # == Returns:
-  # Hash with game info:  id, name (not-unique), release_date,
-  # platform, etc.
+  # @param name [String] game name (required)
+  # @param platform [Integer] (optional - platform id)
+  # @param page [Integer] (optional)
+  #
+  # @return [Hash] Hash with game info:  id, name (not-unique), release_date, platform, etc.
   #
   def self.games_by_name(name, platform: nil, page: 1)
     url = 'Games/ByGameName'
@@ -119,15 +111,12 @@ module Gamesdb
   # locations specific to the requested game id in the database. It
   # also lists the resolution of any images available. Scrapers can be
   # set to use a minimum or maximum resolution for specific images
-  # https://api.thegamesdb.net/#/operations/Games/GamesImages
   #
-  # Parameters
-  # - id - (integer) The numeric ID of the game in Gamesdb that you
-  # like to fetch artwork details for
+  # @see https://api.thegamesdb.net/#/Games/GamesImages
   #
-  # == Returns:
-  # Hash with game art info: fanart (array), boxart (Hash, :front,
-  # :back),  screenshots (array), fanart (array)
+  # @param id [Integer] The numeric ID of the game in Gamesdb that you like to fetch artwork details for
+  #
+  # @return [Hash] Hash with game art info: fanart (array), boxart (Hash, :front, :back),  screenshots (array), fanart (array)
   #
   def self.game_images(id)
     url = 'Games/Images'
