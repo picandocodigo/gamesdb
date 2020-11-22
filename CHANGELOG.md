@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.0.0
+
+- Refactored code and functionality. The API support is the same as 1.2.0, but the library was refactored in a way you need to instantiate a client with the API KEY to use it.
+
+**Breaking changes:**
+
+You now need to instantiate the Gamesdb::Client class passing in the api_key. E.g:
+
+```ruby
+> client = Gamesdb::Client.new(ENV['GAMESDB_API_KEY'])
+
+
+> client = Gamesdb::Client.new('my_api_key')
+> client.platforms
+...
+```
+
 ## 1.2.0
 - Raise ArgumentError if api key isn't present
 

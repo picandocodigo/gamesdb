@@ -1,9 +1,11 @@
 require_relative './test_helper'
 
 describe 'GamesDB - platforms', :vcr do
+  let(:client) { Gamesdb::Client.new(ENV['GAMESDB_API_KEY']) }
+
   describe 'platforms' do
     before do
-      @platforms = Gamesdb.platforms
+      @platforms = client.platforms
     end
 
     it 'should get gaming platforms' do
@@ -41,9 +43,9 @@ describe 'GamesDB - platforms', :vcr do
 
   describe 'games by platform' do
     before do
-      platforms = Gamesdb.platforms
-      @first_page = Gamesdb.games_by_platform_id(platforms[0][:id])
-      @second_page = Gamesdb.games_by_platform_id(platforms[0][:id], 2)
+      platforms = client.platforms
+      @first_page = client.games_by_platform_id(platforms[0][:id])
+      @second_page = client.games_by_platform_id(platforms[0][:id], 2)
     end
 
     it 'should return games in platform by id' do
@@ -60,9 +62,9 @@ describe 'GamesDB - platforms', :vcr do
 
   describe 'games by platform parameters' do
     before do
-      @games1 = Gamesdb.games_by_platform_id(4950)
-      @games2 = Gamesdb.games_by_platform_id(4948)
-      @games3 = Gamesdb.games_by_platform_id("4950,4948")
+      @games1 = client.games_by_platform_id(4950)
+      @games2 = client.games_by_platform_id(4948)
+      @games3 = client.games_by_platform_id("4950,4948")
     end
 
     it 'supports comma separated list' do
@@ -78,7 +80,7 @@ describe 'GamesDB - platforms', :vcr do
   describe 'platform' do
     describe 'assigning basic info' do
       before do
-        @platform = Gamesdb.platform_by_id(6)
+        @platform = client.platform_by_id(6)
       end
 
       it 'should return valid platform info' do
@@ -95,7 +97,7 @@ describe 'GamesDB - platforms', :vcr do
 
     describe 'without hardware or images' do
       before do
-        @platform = Gamesdb.platform_by_id 4916
+        @platform = client.platform_by_id 4916
       end
 
       it 'should return valid platform info' do
