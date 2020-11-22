@@ -16,7 +16,7 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
 
 ## Installation and Quick Start
 
-This gem requires Ruby version 2.3 or more. Add this line to your application's Gemfile:
+This gem requires Ruby version 2.5 or more. Add this line to your application's Gemfile:
 
     gem 'thegamesdb'
 
