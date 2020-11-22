@@ -64,7 +64,7 @@ describe 'GamesDB - platforms', :vcr do
     before do
       @games1 = client.games_by_platform_id(4950)
       @games2 = client.games_by_platform_id(4948)
-      @games3 = client.games_by_platform_id("4950,4948")
+      @games3 = client.games_by_platform_id('4950,4948')
     end
 
     it 'supports comma separated list' do
@@ -74,13 +74,12 @@ describe 'GamesDB - platforms', :vcr do
 
       expect(@games3 - @games1).must_equal @games2
     end
-
   end
 
   describe 'platform' do
     describe 'assigning basic info' do
       before do
-        @platform = client.platform_by_id(6)
+        @platform = client.platforms_by_id(6)
       end
 
       it 'should return valid platform info' do
@@ -97,7 +96,7 @@ describe 'GamesDB - platforms', :vcr do
 
     describe 'without hardware or images' do
       before do
-        @platform = client.platform_by_id 4916
+        @platform = client.platforms_by_id(4916)
       end
 
       it 'should return valid platform info' do
@@ -110,6 +109,16 @@ describe 'GamesDB - platforms', :vcr do
         expect(@platform[:sound]).must_be_nil
         expect(@platform[:display]).must_be_nil
       end
+    end
+  end
+
+  describe 'platforms by name' do
+    it 'should return platforms' do
+      @platforms = client.platforms_by_name("Nintendo")
+
+      expect(@platforms.count).must_equal 14
+      names = @platforms.sort_by { |p| p[:name] }.map { |p| p[:name] }
+      expect(names).must_equal ['Nintendo 3DS', 'Nintendo 64', 'Nintendo DS', 'Nintendo Entertainment System (NES)', 'Nintendo Game Boy', 'Nintendo Game Boy Advance', 'Nintendo Game Boy Color', 'Nintendo GameCube', 'Nintendo Pokémon Mini', 'Nintendo Switch', 'Nintendo Virtual Boy', 'Nintendo Wii', 'Nintendo Wii U', 'Super Nintendo (SNES)']
     end
   end
 end

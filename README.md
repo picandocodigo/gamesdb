@@ -195,7 +195,19 @@ Usage:
 }
 ```
 
-- TODO: /Platforms/ByPlatformName
+- **[/Platforms/ByPlatformName](https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformName)**
+
+Usage:
+```ruby
+> client.platforms_by_name("Nintendo")
+=> [
+  {:id=>4912, :name=>"Nintendo 3DS", :alias=>"nintendo-3ds", :icon=>"nintendo-3ds-1344286647.png", :console=>"4912.png", :controller=>nil, :developer=>"Nintendo", :manufacturer=>"Nintendo", :media=>"Cartridge", :cpu=>"Nintendo ARM", :memory=>"128 MB FCRAM", :graphics=>"PICA200 by Digital Media Professionals", :sound=>nil, :maxcontrollers=>"1", :display=>"800 × 240 px (effectively 400 × 240 WQVGA per eye)", :overview=>"...", :youtube=>nil},
+  {:id=>3, :name=>"Nintendo 64", :alias=>"nintendo-64", :icon=>"nintendo-64-1336524631.png", :console=>"3.png", :controller=>"3.png", :developer=>"Nintendo", :manufacturer=>"Nintendo", :media=>"Cartridge", :cpu=>"93.75 MHz NEC VR4300", :memory=>"4 MB RDRAM (8 MB with Expansion Pack)", :graphics=>"62.5 MHz SGI RCP", :sound=>"48 kHz with 16-bit audio", :maxcontrollers=>"4", :display=>"320 x 240 or 640 x 480 (supported by Expansion Pack)", :overview=>"...", :youtube=>"Up9jO2l2wqo"},
+  {:id=>8, :name=>"Nintendo DS", :alias=>"nintendo-ds", :icon=>"nintendo-ds-1336524642.png", :console=>"8.png", :controller=>nil, :developer=>"Nintendo", :manufacturer=>"Foxconn", :media=>"Cartridge", :cpu=>"ARM9", :memory=>"4 MB RAM", :graphics=>"ARM946E-S", :sound=>"ARM7TDMI", :maxcontrollers=>"1", :display=>"256 × 192", :overview=>"...", :youtube=>nil},
+  {:id=>7, :name=>"Nintendo Entertainment System (NES)", :alias=>"nintendo-entertainment-system-nes", :icon=>"nintendo-entertainment-system-nes-1336524652.png", :console=>"7.png", :controller=>"7.png", :developer=>"Nintendo", :manufacturer=>"Nintendo", :media=>"Cartridge", :cpu=>"Ricoh 2A03", :memory=>"2KB RAM", :graphics=>"RP2C02", :sound=>"Pulse Code Modulation", :maxcontrollers=>"2", :display=>"RGB", :overview=>"..."}, (...)
+]
+```
+
 - TODO: /Platforms/Images
 
 ### Genres

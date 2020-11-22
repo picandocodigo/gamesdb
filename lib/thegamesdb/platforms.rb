@@ -24,7 +24,7 @@ module Gamesdb
     #
     # @return [Hash] Hash with platform information
     #
-    def platform_by_id(id)
+    def platforms_by_id(id)
       url = 'Platforms/ByPlatformID'
       params = {
         id: id,
@@ -32,8 +32,36 @@ module Gamesdb
       }
       data = perform_request(url, params)
 
-      response = data['data']['platforms'].values.first
-      symbolize_keys(response)
+      platform_api_response(data)
+    end
+
+    # Returns platforms by name
+    def platforms_by_name(name)
+      url = 'Platforms/ByPlatformName'
+      params = {
+        name: name,
+        fields: 'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,display,overview,youtube'
+      }
+      data = perform_request(url, params)
+
+      platform_api_response(data)
+    end
+
+    def platform_api_response(data)
+      return [] if data['data']['count'].zero?
+
+      platforms = data['data']['platforms']
+
+      response = case platforms
+                 when Hash
+                   platforms.map { |_k, platform| symbolize_keys(platform) }
+                 when Array
+                   platforms.map { |platform| symbolize_keys(platform) }
+                 end
+
+      return response.first if response.count == 1
+
+      response
     end
   end
 end
