@@ -19,18 +19,17 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '> 2.5.0'
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'byebug'
+  spec.add_development_dependency 'byebug' unless defined?(JRUBY_VERSION)
   spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'minitest-vcr'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'vcr', '~> 4'
   spec.add_development_dependency 'webmock'
   spec.metadata      = {
-    "bug_tracker_uri"   => "https://github.com/picandocodigo/gamesdb/issues",
-    "changelog_uri"     => "https://github.com/picandocodigo/gamesdb/blob/master/CHANGELOG.md",
-    "documentation_uri" => "https://github.com/picandocodigo/gamesdb/blob/master/README.md#gamesdb",
-    "homepage_uri"      => "https://github.com/picandocodigo/gamesdb",
-    "source_code_uri"   => "https://github.com/picandocodigo/gamesdb",
+    'bug_tracker_uri'   => 'https://github.com/picandocodigo/gamesdb/issues',
+    'changelog_uri'     => 'https://github.com/picandocodigo/gamesdb/blob/master/CHANGELOG.md',
+    'documentation_uri' => 'https://github.com/picandocodigo/gamesdb/blob/master/README.md#gamesdb',
+    'homepage_uri'      => 'https://github.com/picandocodigo/gamesdb',
+    'source_code_uri'   => 'https://github.com/picandocodigo/gamesdb',
   }
 end
