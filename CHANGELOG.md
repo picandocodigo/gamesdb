@@ -4,7 +4,11 @@
 
 - Refactored code and functionality. The API support is the same as 1.2.0, but the library was refactored in a way you need to instantiate a client with the API KEY to use it.
 
-**Breaking changes:**
+### New APIs
+
+- `platforms_by_name`
+
+### Breaking changes:
 
 You now need to instantiate the Gamesdb::Client class passing in the api_key. E.g:
 
@@ -16,6 +20,14 @@ You now need to instantiate the Gamesdb::Client class passing in the api_key. E.
 > client.platforms
 ...
 ```
+
+Changes in methods:
+
+- `platform_by_id` changes to `platforms_by_id`.
+- `game_by_id` changes to `games_by_id`.
+- `game_images` changes to `games_images`.
+These APIs now support a string of comma delimited ids as parameters as well as the id Integer.
+
 
 ## 1.2.0
 - Raise ArgumentError if api key isn't present
