@@ -71,6 +71,16 @@ Usage:
  }
 ```
 
+Supports both an Array of ids or comma delimited list:
+
+```ruby
+> client.games_by_id("6177, 6178")
+ => [
+ {:id=>6177, :game_title=>"Super Turrican", :release_date=>"1993-05-01", :platform=>6, :players=>1, :overview=>"Super Turrican is the next generation installment of the famous Turrican Series. Once again it is up to the U.S.S. Freedom Forces to get into their Turrican Assault Suits and drive back the forces of \"The Machine\".\r\n\r\nSimilar to it's predecessors, Super Turican features large levels that are crammed with secrets and can be explored freely and in any direction. To get rid of the numerous enemies, Turrican can use three upgradeable shots: A spreadshot, a powerful laser and a rebound that bounces off of walls. Additionally, there is a Freeze-Beam that can be used to temporarily freeze enemies. It is fully rotatable, and therefor also a great help in discovering secret capsules. These capsules contain powerups and can often be used to reach secret areas. Last but not least, Turrican has the ability to transform into an energy wheel (as long as he has enough special energy), which enables him to lay mines and even makes him invincible.", :last_updated=>"2018-07-11 21:05:25", :rating=>"T - Teen", :coop=>"No", :youtube=>nil, :os=>nil, :processor=>nil, :ram=>nil, :hdd=>nil, :video=>nil, :sound=>nil, :developers=>[2976], :genres=>[8], :publishers=>[454], :alternates=>nil},
+ {:id=>6178, :game_title=>"Super Turrican 2", :release_date=>"1995-11-01", :platform=>6, :players=>1, :overview=>"Twice the Firepower, Twice the burn.\r\n\r\nIf you haven’t played Super Turrican, chances are you won’t last past the intro sequence here... As an intergalactic hero-wannabe commissioned to crush a venomous mutant armada, you are thrust into a chaotic world even more violent than the original. This time there are more enemies to torch (and be torched by)-including the most heinous level bosses on 16-bit-and enough Mode7 graphic levels to make you wish mommy were there to hold your hand. But she’ll be busy cleaning up your charred carcass.\r\n\r\nSuper Turrican 2. Feel the burn.", :last_updated=>"2019-01-24 13:38:26", :rating=>"T - Teen", :coop=>"No", :youtube=>"", :os=>nil, :processor=>nil, :ram=>nil, :hdd=>nil, :video=>nil, :sound=>nil, :developers=>[2976], :genres=>[8], :publishers=>[43], :alternates=>nil}
+ ]
+```
+
 - **[/Games/ByGameName](https://api.thegamesdb.net/#/Games/GamesByGameName)**
 
 Usage:

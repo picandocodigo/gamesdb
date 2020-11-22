@@ -20,11 +20,9 @@ describe 'Gamesdb - games', :vcr do
   end
 
   describe 'game by several ids' do
-    before do
-      @games = client.games_by_id([109, 108]).sort_by { |g| g[:id] }
-    end
+    it 'should return games for a String of ids' do
+      @games = client.games_by_id('109,108').sort_by { |g| g[:id] }
 
-    it 'should return 2 games' do
       expect(@games.count).must_equal 2
       expect(@games.first[:id]).must_equal 108
       expect(@games.last[:id]).must_equal 109
