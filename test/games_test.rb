@@ -1,9 +1,11 @@
 require_relative './test_helper.rb'
 
 describe 'Gamesdb - games', :vcr do
+  let(:client) { Gamesdb::Client.new(ENV['GAMESDB_API_KEY']) }
+
   describe 'game' do
     before do
-      @game = Gamesdb.game_by_id(109)
+      @game = client.games_by_id(109)
     end
 
     it 'should have a valid id' do
@@ -17,9 +19,21 @@ describe 'Gamesdb - games', :vcr do
     end
   end
 
+  describe 'game by several ids' do
+    before do
+      @games = client.games_by_id([109, 108]).sort_by { |g| g[:id] }
+    end
+
+    it 'should return 2 games' do
+      expect(@games.count).must_equal 2
+      expect(@games.first[:id]).must_equal 108
+      expect(@games.last[:id]).must_equal 109
+    end
+  end
+
   describe 'empty game' do
     before do
-      @game = Gamesdb.game_by_id(3)
+      @game = client.games_by_id(3)
     end
 
     it 'should return an empty array' do
@@ -29,7 +43,7 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'games by name' do
     before do
-      @games_list = Gamesdb.games_by_name('turrican')
+      @games_list = client.games_by_name('turrican')
     end
 
     it 'should return a list' do
@@ -43,8 +57,8 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'games by name pages' do
     before do
-      @first_page = Gamesdb.games_by_name('mario', page: 1)
-      @second_page = Gamesdb.games_by_name('mario', page: 2)
+      @first_page = client.games_by_name('mario', page: 1)
+      @second_page = client.games_by_name('mario', page: 2)
     end
 
     it 'should return games in platform by id' do
@@ -61,7 +75,7 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'games by name and platform' do
     before do
-      @games_list = Gamesdb.games_by_name('mario', platform: 7)
+      @games_list = client.games_by_name('mario', platform: 7)
     end
 
     it 'should return a list' do
@@ -77,7 +91,7 @@ describe 'Gamesdb - games', :vcr do
   describe 'games art', :vcr do
     describe 'when most of the art is available' do
       before do
-        @images = Gamesdb.game_images('218')
+        @images = client.games_images('218')
       end
 
       it 'should return logo and boxart' do
@@ -106,7 +120,7 @@ describe 'Gamesdb - games', :vcr do
 
     describe 'when some art is missing' do
       before do
-        @images = Gamesdb.game_images(65238)
+        @images = client.games_images(65238)
       end
 
       it 'should return an empty array' do
