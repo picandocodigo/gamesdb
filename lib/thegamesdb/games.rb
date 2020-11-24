@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gamesdb
   module Games
     # Method for listing platform's games
@@ -11,7 +13,7 @@ module Gamesdb
     #
     def games_by_platform_id(platform_id, page = 1)
       url = 'Games/ByPlatformID'
-      params = {id: platform_id, page: page, include: 'boxart'}
+      params = { id: platform_id, page: page, include: 'boxart' }
       data = perform_request(url, params)
       process_platform_games(data)
     end
@@ -32,7 +34,7 @@ module Gamesdb
         include: 'boxart,platform'
       }
       data = perform_request(url, params)
-      return [] if data['data']['count'] == 0
+      return [] if (data['data']['count']).zero?
 
       games = data['data']['games']
       return symbolize_keys(games.first) if games.count == 1
@@ -58,9 +60,7 @@ module Gamesdb
         name: name,
         page: page
       }
-      unless platform.nil?
-        params.merge!("filter[platform]" => platform)
-      end
+      params.merge!('filter[platform]' => platform) unless platform.nil?
 
       data = perform_request(url, params)
       process_platform_games(data)

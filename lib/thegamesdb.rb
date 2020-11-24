@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'thegamesdb/version'
 require 'thegamesdb/games'
 require 'thegamesdb/platforms'
@@ -10,8 +12,8 @@ module Gamesdb
     include Gamesdb::Games
     include Gamesdb::Platforms
 
-    BASE_URL = 'https://api.thegamesdb.net/v1/'.freeze
-    IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'.freeze
+    BASE_URL = 'https://api.thegamesdb.net/v1/'
+    IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'
 
     def initialize(api_key)
       @api_key = api_key
@@ -48,7 +50,7 @@ module Gamesdb
     end
 
     def process_logo(data, id)
-      logo = data['images'][id.to_s].select { |a| a['type'] == "clearlogo" }
+      logo = data['images'][id.to_s].select { |a| a['type'] == 'clearlogo' }
       logo.empty? ? '' : logo.first['filename']
     end
 
@@ -58,8 +60,9 @@ module Gamesdb
         a['type'] == 'fanart'
       end
       return [] if fanart.empty?
+
       fanart.each do |art|
-        width, height = art['resolution'].split("x") unless art['resolution'].nil?
+        width, height = art['resolution'].split('x') unless art['resolution'].nil?
         fanarts << {
           url: art['filename'],
           resolution: art['resolution'],
@@ -79,11 +82,12 @@ module Gamesdb
     def process_covers(data, id)
       covers = {}
       boxart = data['images'][id.to_s].select do |a|
-        a['type'] == "boxart"
+        a['type'] == 'boxart'
       end
       return [] if boxart.empty?
+
       boxart.each do |art|
-        width, height = art['resolution'].split("x") unless art['resolution'].nil?
+        width, height = art['resolution'].split('x') unless art['resolution'].nil?
         covers[art['side'].to_sym] = {
           url: art['filename'],
           resolution: art['resolution'],
@@ -116,19 +120,19 @@ module Gamesdb
           youtube: elem['youtube'],
           alternates: elem['alternates'],
           image: if boxart = data.dig('include', 'boxart', 'data', id.to_s)
-          data['include']['boxart']['base_url']['original'] +
-            boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
+                   data['include']['boxart']['base_url']['original'] +
+                   boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
                  end
-      }
+        }
+      end
+      games
     end
-    games
-  end
 
-  def symbolize_keys(hash)
-    hash.keys.each do |key|
-      hash[key.to_sym] = hash.delete(key)
+    def symbolize_keys(hash)
+      hash.each_key do |key|
+        hash[key.to_sym] = hash.delete(key)
+      end
+      hash
     end
-    hash
   end
-end
 end

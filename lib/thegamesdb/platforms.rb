@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gamesdb
   module Platforms
     # Method for listing platforms
