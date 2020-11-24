@@ -1,4 +1,6 @@
-require_relative './test_helper.rb'
+# frozen_string_literal: true
+
+require_relative './test_helper'
 
 describe 'Gamesdb - games', :vcr do
   let(:client) { Gamesdb::Client.new(ENV['GAMESDB_API_KEY']) }
@@ -118,7 +120,7 @@ describe 'Gamesdb - games', :vcr do
 
     describe 'when some art is missing' do
       before do
-        @images = client.games_images(65238)
+        @images = client.games_images(65_238)
       end
 
       it 'should return an empty array' do

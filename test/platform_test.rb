@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative './test_helper'
 
 describe 'GamesDB - platforms', :vcr do
@@ -114,7 +116,7 @@ describe 'GamesDB - platforms', :vcr do
 
   describe 'platforms by name' do
     it 'should return platforms' do
-      @platforms = client.platforms_by_name("Nintendo")
+      @platforms = client.platforms_by_name('Nintendo')
 
       expect(@platforms.count).must_equal 14
       names = @platforms.sort_by { |p| p[:name] }.map { |p| p[:name] }
