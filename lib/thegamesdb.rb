@@ -42,71 +42,62 @@ module Gamesdb
 
     private
 
-    def handle_errors(e)
-      case e
-      when Net::HTTPNotFound
-        raise e
-      end
-    end
-
     def process_logo(data, id)
       logo = data['images'][id.to_s].select { |a| a['type'] == 'clearlogo' }
       logo.empty? ? '' : logo.first['filename']
     end
 
     def process_fanart(data, id)
-      fanarts = []
-      fanart = data['images'][id.to_s].select do |a|
-        a['type'] == 'fanart'
-      end
+      fanart = select_images(data, id, 'fanart')
       return [] if fanart.empty?
 
-      fanart.each do |art|
-        width, height = art['resolution'].split('x') unless art['resolution'].nil?
-        fanarts << {
-          url: art['filename'],
-          resolution: art['resolution'],
-          width: width,
-          height: height
-        }
-      end
-      fanarts
-    end
-
-    def process_screenshots(data, id)
-      data['images'][id.to_s].select do |a|
-        a['type'] == 'screenshot'
-      end.map { |b| symbolize_keys(b) }
+      fanart.map { |art| build_individual_fanart(art) }
     end
 
     def process_covers(data, id)
       covers = {}
-      boxart = data['images'][id.to_s].select do |a|
-        a['type'] == 'boxart'
-      end
+      boxart = select_images(data, id, 'boxart')
       return [] if boxart.empty?
 
       boxart.each do |art|
         width, height = art['resolution'].split('x') unless art['resolution'].nil?
-        covers[art['side'].to_sym] = {
-          url: art['filename'],
-          resolution: art['resolution'],
-          width: width,
-          height: height
-        }
+        covers[art['side'].to_sym] = art_structure(art, width, height)
       end
       covers
     end
 
-    # Process games for platform_games
-    def process_platform_games(data)
-      games = []
+    def build_individual_fanart(art)
+      width, height = art['resolution'].split('x') unless art['resolution'].nil?
+      art_structure(art, width, height)
+    end
 
-      data['data']['games'].each do |elem|
-        id = elem['id']
-        games << {
+    def art_structure(art, width, height)
+      {
+        url: art['filename'],
+        resolution: art['resolution'],
+        width: width,
+        height: height
+      }
+    end
+
+    def process_screenshots(data, id)
+      select_images(data, id, 'screenshot').map { |b| symbolize_keys(b) }
+    end
+
+    def select_images(data, id, image_type)
+      data['images'][id.to_s].select do |a|
+        a['type'] == image_type
+      end
+    end
+
+    # Process games for platform_games
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
+    def process_platform_games(data)
+      data['data']['games'].map do |elem|
+        {
           name: elem['game_title'],
-          id: id,
+          id: elem['id'],
           release_date: elem['release_date'],
           platform: elem['platform'],
           developers: elem['developers'],
@@ -119,20 +110,22 @@ module Gamesdb
           coop: elem['coop'],
           youtube: elem['youtube'],
           alternates: elem['alternates'],
-          image: if boxart = data.dig('include', 'boxart', 'data', id.to_s)
+          image: if (boxart = data.dig('include', 'boxart', 'data', elem['id'].to_s))
                    data['include']['boxart']['base_url']['original'] +
-                   boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
+                     boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
                  end
         }
       end
-      games
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     def symbolize_keys(hash)
+      new_hash = {}
       hash.each_key do |key|
-        hash[key.to_sym] = hash.delete(key)
+        new_hash[key.to_sym] = hash.delete(key)
       end
-      hash
+      new_hash
     end
   end
 end
