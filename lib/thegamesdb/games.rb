@@ -90,5 +90,25 @@ module Gamesdb
       response[:fanart] = process_fanart(data['data'], id)
       response
     end
+
+    # Fetch games update
+    #
+    # @see https://api.thegamesdb.net/#/Games/GamesUpdates
+    #
+    # @param last_edit_id [Integer] Required
+    # @param time [Integer] (optional)
+    # @param page [Integer] results page offset to return (optional)
+    def games_update(last_edit_id, arguments = {})
+      url = 'Games/Updates'
+      params = arguments.merge({ last_edit_id: last_edit_id })
+      data = perform_request(url, params)
+
+      regexp = /page\=([0-9]+)/
+      response = {}
+      response[:updates] = data['data']['updates']
+      response[:previous_page] = data.dig('pages', 'previous')&.match(regexp)&.captures&.first&.to_i
+      response[:next_page] = data.dig('pages', 'next')&.match(regexp)&.captures&.first&.to_i
+      response
+    end
   end
 end

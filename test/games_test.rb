@@ -125,5 +125,25 @@ describe 'Gamesdb - games', :vcr do
         expect(@images).must_be_kind_of Hash
       end
     end
+
+    describe 'update games' do
+      it 'should return updates' do
+        updates = client.games_update(1)
+
+        expect(updates[:updates].count).must_equal 100
+        expect(updates[:updates].first).must_equal({ 'edit_id' => 2, 'game_id' => 38_113, 'timestamp' => '2018-06-28 16:20:54', 'type' => 'boxart', 'value' => 'boxart/front/38113-1.jpg' })
+        expect(updates[:updates].last).must_equal({ 'edit_id' => 101, 'game_id' => 22_208, 'timestamp' => '2018-06-29 02:36:38', 'type' => 'rating', 'value' => 'E - Everyone' })
+        expect(updates[:previous_page]).must_be_nil
+        expect(updates[:next_page]).must_equal 2
+      end
+
+      it 'should return updates when using a page parameter' do
+        updates = client.games_update(1, {page: 1_000})
+
+        expect(updates[:updates].count).must_equal 100
+        expect(updates[:previous_page]).must_equal 999
+        expect(updates[:next_page]).must_equal 1001
+      end
+    end
   end
 end

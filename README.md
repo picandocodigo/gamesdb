@@ -1,4 +1,4 @@
-# Gamesdb
+# Gamesdb 🎮 🕹
 A Ruby gem to interact with [TheGamesDB](http://thegamesdb.net) API.
 
 The Legacy API has been shutdown. The gem is now using the new API and you need to [request an API key](https://forums.thegamesdb.net/viewforum.php?f=10) to use it.
@@ -149,7 +149,59 @@ Usage:
 }
 ```
 
-- TODO: **[/Games/Updates](https://api.thegamesdb.net/#/Games/GamesUpdates)**
+- **[/Games/Updates](https://api.thegamesdb.net/#/Games/GamesUpdates)**
+
+Usage:
+
+```ruby
+> client.games_update(1000)
+   => {:updates=> [
+     {"edit_id"=>1001, "game_id"=>60054, "timestamp"=>"2018-07-02 05:54:36", "type"=>"publisher", "value"=>"Semi Secret Software"},
+     {"edit_id"=>1002, "game_id"=>60054, "timestamp"=>"2018-07-02 05:54:36", "type"=>"youtube", "value"=>""},
+     {"edit_id"=>1003, "game_id"=>60054, "timestamp"=>"2018-07-02 05:54:36", "type"=>"platform", "value"=>"4916"},
+     {"edit_id"=>1004, "game_id"=>60054, "timestamp"=>"2018-07-02 05:54:36", "type"=>"genre", "value"=>"|Action|"},
+     {"edit_id"=>1005, "game_id"=>60054, "timestamp"=>"2018-07-02 05:54:36", "type"=>"rating", "value"=>"E10+ - Everyone 10+"},
+     {"edit_id"=>1006, "game_id"=>60054, "timestamp"=>"2018-07-02 05:57:09", "type"=>"series", "value"=>"series/60054-1.jpg"},
+     {"edit_id"=>1007, "game_id"=>55249, "timestamp"=>"2018-07-02 05:57:17", "type"=>"boxart", "value"=>"boxart/front/55249-1.jpg"},
+     {"edit_id"=>1008, "game_id"=>60054, "timestamp"=>"2018-07-02 05:57:26", "type"=>"boxart", "value"=>"boxart/front/60054-1.jpg"},
+     {"edit_id"=>1009, "game_id"=>60055, "timestamp"=>"2018-07-02 05:57:37", "type"=>"game", "value"=>"[NEW]"},
+     {"edit_id"=>1010, "game_id"=>60055, "timestamp"=>"2018-07-02 05:57:37", "type"=>"game_title", "value"=>"Star Breaker"},
+     ...
+     ],
+     :previous_page=>nil,
+     :next_page=>2
+     }
+```
+
+With pages:
+
+```ruby
+>response = client.games_update(1000, page: 100)
+   => {:updates=> [
+   {"edit_id"=>11073, "game_id"=>36224, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]},
+   {"edit_id"=>11074, "game_id"=>36229, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]},
+   {"edit_id"=>11075, "game_id"=>36230, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]},
+   {"edit_id"=>11076, "game_id"=>36252, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[47]},
+   {"edit_id"=>11077, "game_id"=>36284, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]},
+   {"edit_id"=>11078, "game_id"=>36379, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]},
+   {"edit_id"=>11079, "game_id"=>36740, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[171]},
+   {"edit_id"=>11080, "game_id"=>36757, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[731]},
+   {"edit_id"=>11081, "game_id"=>36777, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[309]},
+   {"edit_id"=>11082, "game_id"=>36785, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[731]},
+   ...
+ ],
+ :previous_page=>99,
+ :next_page=>101
+ }
+>next_page = client.games_update(1000, page: response[:next_page])
+   => {:updates=> [
+        {"edit_id"=>11173, "game_id"=>48037, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]}, 
+        ],
+        :previous_page=>100,
+        :next_page=>102
+     }
+```
+
 
 ### Platforms
 
