@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Gamesdb
+  # Platforms related API Endpoints
   module Platforms
     # Method for listing platforms
     #
@@ -10,7 +11,9 @@ module Gamesdb
     #
     def platforms
       url = 'Platforms'
-      params = { fields: 'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,display,overview,youtube' }
+      params = { fields:
+        'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,'\
+          'display,overview,youtube' }
       data = perform_request(url, params)
 
       data['data']['platforms'].map do |p|
@@ -32,7 +35,9 @@ module Gamesdb
       url = 'Platforms/ByPlatformID'
       params = {
         id: id,
-        fields: 'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,display,overview,youtube'
+        fields:
+        'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,' \
+        'display,overview,youtube'
       }
       data = perform_request(url, params)
 
@@ -51,7 +56,9 @@ module Gamesdb
       url = 'Platforms/ByPlatformName'
       params = {
         name: name,
-        fields: 'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,display,overview,youtube'
+        fields:
+        'icon,console,controller,developer,manufacturer,media,cpu,memory,graphics,sound,maxcontrollers,display,' \
+        'overview,youtube'
       }
       data = perform_request(url, params)
 

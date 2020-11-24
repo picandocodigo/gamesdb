@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Gamesdb
+  # Games related API Endpoints
   module Games
     # Method for listing platform's games
     #
@@ -26,11 +27,14 @@ module Gamesdb
     #
     # @return [Array|Hash] Hash with game info
     #
+    # rubocop:disable Metrics/MethodLength
     def games_by_id(id)
       url = 'Games/ByGameID'
       params = {
         id: id,
-        fields: 'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates',
+        fields:
+        'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd,'\
+        'video,sound,alternates',
         include: 'boxart,platform'
       }
       data = perform_request(url, params)
@@ -41,6 +45,7 @@ module Gamesdb
 
       games.map { |game| symbolize_keys(game) }
     end
+    # rubocop:enable Metrics/MethodLength
 
     # The GetGamesList API search returns a listing of games matched up with loose search terms.
     #
@@ -52,10 +57,13 @@ module Gamesdb
     #
     # @return [Hash] Hash with game info:  id, name (not-unique), release_date, platform, etc.
     #
+    # rubocop:disable Metrics/MethodLength
     def games_by_name(name, platform: nil, page: 1)
       url = 'Games/ByGameName'
       params = {
-        fields: 'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates',
+        fields:
+        'players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os,processor,ram,hdd'\
+          ',video,sound,alternates',
         include: 'boxart',
         name: name,
         page: page
@@ -65,6 +73,7 @@ module Gamesdb
       data = perform_request(url, params)
       process_platform_games(data)
     end
+    # rubocop:enable Metrics/MethodLength
 
     # This API feature returns a list of available artwork types and
     # locations specific to the requested game id in the database. It
@@ -75,8 +84,10 @@ module Gamesdb
     #
     # @param id [Integer] The numeric ID of the game in Gamesdb that you like to fetch artwork details for
     #
-    # @return [Hash] Hash with game art info: fanart (array), boxart (Hash, :front, :back),  screenshots (array), fanart (array)
+    # @return [Hash] Hash with game art info: fanart (array), boxart (Hash,
+    #   :front, :back),  screenshots (array), fanart (array)
     #
+    # rubocop:disable Metrics/AbcSize
     def games_images(id)
       url = 'Games/Images'
       data = perform_request(url, games_id: id)
@@ -98,17 +109,22 @@ module Gamesdb
     # @param last_edit_id [Integer] Required
     # @param time [Integer] (optional)
     # @param page [Integer] results page offset to return (optional)
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def games_update(last_edit_id, arguments = {})
       url = 'Games/Updates'
       params = arguments.merge({ last_edit_id: last_edit_id })
       data = perform_request(url, params)
 
-      regexp = /page\=([0-9]+)/
+      regexp = /page=([0-9]+)/
       response = {}
       response[:updates] = data['data']['updates']
       response[:previous_page] = data.dig('pages', 'previous')&.match(regexp)&.captures&.first&.to_i
       response[:next_page] = data.dig('pages', 'next')&.match(regexp)&.captures&.first&.to_i
       response
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end

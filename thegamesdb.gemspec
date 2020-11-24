@@ -5,6 +5,7 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'thegamesdb/version'
 
+# rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |spec|
   spec.name          = 'thegamesdb'
   spec.version       = Gamesdb::VERSION
@@ -36,3 +37,4 @@ Gem::Specification.new do |spec|
     'source_code_uri' => 'https://github.com/picandocodigo/gamesdb'
   }
 end
+# rubocop:enable Metrics/BlockLength

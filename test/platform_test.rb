@@ -120,7 +120,12 @@ describe 'GamesDB - platforms', :vcr do
 
       expect(@platforms.count).must_equal 14
       names = @platforms.sort_by { |p| p[:name] }.map { |p| p[:name] }
-      expect(names).must_equal ['Nintendo 3DS', 'Nintendo 64', 'Nintendo DS', 'Nintendo Entertainment System (NES)', 'Nintendo Game Boy', 'Nintendo Game Boy Advance', 'Nintendo Game Boy Color', 'Nintendo GameCube', 'Nintendo Pokémon Mini', 'Nintendo Switch', 'Nintendo Virtual Boy', 'Nintendo Wii', 'Nintendo Wii U', 'Super Nintendo (SNES)']
+      expect(names).must_equal [
+        'Nintendo 3DS', 'Nintendo 64', 'Nintendo DS', 'Nintendo Entertainment System (NES)',
+        'Nintendo Game Boy', 'Nintendo Game Boy Advance', 'Nintendo Game Boy Color', 'Nintendo GameCube',
+        'Nintendo Pokémon Mini', 'Nintendo Switch', 'Nintendo Virtual Boy', 'Nintendo Wii', 'Nintendo Wii U',
+        'Super Nintendo (SNES)'
+      ]
     end
   end
 end
