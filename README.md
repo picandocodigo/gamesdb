@@ -6,10 +6,20 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
 [![Build Status](https://api.travis-ci.com/picandocodigo/gamesdb.svg?branch=master)](https://travis-ci.com/picandocodigo/gamesdb)
 [![Gem Version](https://badge.fury.io/rb/thegamesdb.svg)](https://badge.fury.io/rb/thegamesdb)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2dcf3cdcbe37adcea569/maintainability)](https://codeclimate.com/github/picandocodigo/gamesdb/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/2dcf3cdcbe37adcea569/test_coverage)](https://codeclimate.com/github/picandocodigo/gamesdb/test_coverage)
 
 * [Installation and Quick Start](#installation-and-quick-start)
-* [Usage](#usage)
+* [General Usage](#usage)
+  * [Games](#games)
+    * [Games/ByGameID](#gamesbygameid)
+    * [Games/ByGameName](#gamesbygamename)
+    * [Games/ByGamePlaformID](#gamesbyplatformid)
+    * [Games/Images](#gamesimages)
+    * [Games/Updates](#gamesupdates)
+  * [Platforms](#platforms)
+    * [Platforms](#platforms-1)
+    * [Platforms/ByPlatformID](#platformsbyplatformid)
+    * [Platforms/ByPlatformName](#platformsbyplatformname)
+* [RubyDoc](https://www.rubydoc.info/gems/thegamesdb)
 * [Development](#development)
 * [Contributing](#contributing)
 
@@ -41,6 +51,8 @@ The full documentation for the API is available [here](API Documentation: https:
 
 ### Games
 
+
+#### Games/ByGameID
 - **[/Games/ByGameID](https://api.thegamesdb.net/#/Games/GamesByGameID)**
 
 Usage:
@@ -81,6 +93,8 @@ Supports both an Array of ids or comma delimited list:
  ]
 ```
 
+#### Games/ByGameName
+
 - **[/Games/ByGameName](https://api.thegamesdb.net/#/Games/GamesByGameName)**
 
 Usage:
@@ -98,6 +112,8 @@ Usage:
    {:id=>10750, :game_title=>"Mario Kart Arcade GP", :release_date=>"2005-10-12", :platform=>23, :developers=>[5804]}, ...
  ] 
 ```
+#### Games/ByPlatformID
+
 - **[/Games/ByPlatformID](https://api.thegamesdb.net/#/Games/GamesByPlatformID)**
 
 Usage:
@@ -125,6 +141,7 @@ Supports comma delimited list:
 > client.games_by_platform_id("4950,4948")
 ```
 
+#### Games/Images
 - **[/Games/Images](https://api.thegamesdb.net/#/Games/GamesImages)**
 
 Usage:
@@ -148,6 +165,8 @@ Usage:
    ]
 }
 ```
+
+#### Games/Updates
 
 - **[/Games/Updates](https://api.thegamesdb.net/#/Games/GamesUpdates)**
 
@@ -205,6 +224,7 @@ With pages:
 
 ### Platforms
 
+#### /Platforms
 - **[/Platforms](https://api.thegamesdb.net/#/Platforms/Platforms)**
 
 Usage:
@@ -221,6 +241,8 @@ Usage:
  {:name=>"Android", :id=>4916, :slug=>"android"},
  ...
 ```
+
+#### Platforms/ByPlatformID
 - **[/Platforms/ByPlatformID](https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformID)**
 
 Usage:
@@ -246,6 +268,8 @@ Usage:
    :youtube=>nil
 }
 ```
+
+#### Platforms/ByPlatformName
 
 - **[/Platforms/ByPlatformName](https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformName)**
 

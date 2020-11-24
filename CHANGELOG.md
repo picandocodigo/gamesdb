@@ -7,6 +7,7 @@
 ### New APIs
 
 - `platforms_by_name`
+- `games_update`
 
 ### Breaking changes:
 
