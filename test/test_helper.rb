@@ -3,6 +3,7 @@ require 'minitest/reporters'
 require 'minitest/spec'
 require 'vcr'
 require 'minitest-vcr'
+
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 MinitestVcr::Spec.configure!
 
