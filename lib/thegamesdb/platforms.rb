@@ -65,6 +65,25 @@ module Gamesdb
       platform_api_response(data)
     end
 
+    # Fetch platform(s) images by platform(s) id
+    #
+    # @see https://api.thegamesdb.net/#/Platforms/PlatformsImages
+    #
+    # @param platforms_id [Integer|String] The numeric ID of the platform in the GamesDB
+    # database or a String with comma delimited list of Ids. (Required)
+    # @param filter [String] options: 'fanart', 'banner', 'boxart' (supports
+    # comma delimited list)
+    # @param page [Integer]
+    #
+    # @return
+    def platform_images(platforms_id, args = {})
+      url = 'Platforms/Images'
+      args['filter[type]'] = args.delete(:type) if args[:type]
+      args = args.merge({ platforms_id: platforms_id })
+      data = perform_request(url, args)
+      data['data']['images'].values.flatten
+    end
+
     # Auxiliary method to return either one hash when there's only one result or
     # an Array of Hashes for several results
     def platform_api_response(data)
