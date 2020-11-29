@@ -53,7 +53,8 @@ The full documentation for the API is available [here](API Documentation: https:
 
 
 #### Games/ByGameID
-- **[/Games/ByGameID](https://api.thegamesdb.net/#/Games/GamesByGameID)**
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Games#games_by_id-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Games/GamesByGameID)**
 
 Usage:
 
@@ -95,7 +96,8 @@ Supports both an Array of ids or comma delimited list:
 
 #### Games/ByGameName
 
-- **[/Games/ByGameName](https://api.thegamesdb.net/#/Games/GamesByGameName)**
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Games#games_by_name-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Games/GamesByGameName)**
 
 Usage:
 
@@ -114,7 +116,8 @@ Usage:
 ```
 #### Games/ByPlatformID
 
-- **[/Games/ByPlatformID](https://api.thegamesdb.net/#/Games/GamesByPlatformID)**
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Games#games_by_platform_id-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Games/GamesByPlatformID)**
 
 Usage:
 
@@ -142,7 +145,9 @@ Supports comma delimited list:
 ```
 
 #### Games/Images
-- **[/Games/Images](https://api.thegamesdb.net/#/Games/GamesImages)**
+
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Games#games_images-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Games/GamesImages)**
 
 Usage:
 
@@ -168,7 +173,8 @@ Usage:
 
 #### Games/Updates
 
-- **[/Games/Updates](https://api.thegamesdb.net/#/Games/GamesUpdates)**
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Games#games_update-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Games/GamesUpdates)**
 
 Usage:
 
@@ -192,7 +198,7 @@ Usage:
      }
 ```
 
-With pages:
+Pages:
 
 ```ruby
 >response = client.games_update(1000, page: 100)
@@ -225,7 +231,9 @@ With pages:
 ### Platforms
 
 #### /Platforms
-- **[/Platforms](https://api.thegamesdb.net/#/Platforms/Platforms)**
+
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Platforms#platforms-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Platforms/Platforms)**
 
 Usage:
 ```ruby
@@ -243,7 +251,9 @@ Usage:
 ```
 
 #### Platforms/ByPlatformID
-- **[/Platforms/ByPlatformID](https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformID)**
+
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Platforms#platforms_by_id-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformID)**
 
 Usage:
 ```ruby
@@ -271,7 +281,8 @@ Usage:
 
 #### Platforms/ByPlatformName
 
-- **[/Platforms/ByPlatformName](https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformName)**
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Platforms#platforms_by_name-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Platforms/PlatformsByPlatformName)**
 
 Usage:
 ```ruby
