@@ -19,6 +19,7 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
     * [Platforms](#platforms-1)
     * [Platforms/ByPlatformID](#platformsbyplatformid)
     * [Platforms/ByPlatformName](#platformsbyplatformname)
+  * [Genres](#genres)
 * [RubyDoc](https://www.rubydoc.info/gems/thegamesdb)
 * [Development](#development)
 * [Contributing](#contributing)
@@ -299,7 +300,21 @@ Usage:
 
 ### Genres
 
-- TODO: /Genres
+- **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Genres#genres-instance_method)**
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Genres/Genres)**
+
+```ruby
+> client.genres
+ => [
+  {"id"=>1, "name"=>"Action"},
+  {"id"=>2, "name"=>"Adventure"},
+  {"id"=>20, "name"=>"Board"},
+  {"id"=>3, "name"=>"Construction and Management Simulation"},
+  {"id"=>21, "name"=>"Education"},
+  ...
+] 
+
+```
 
 ### Developers
 

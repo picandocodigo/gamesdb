@@ -2,6 +2,7 @@
 
 require 'thegamesdb/version'
 require 'thegamesdb/games'
+require 'thegamesdb/genres'
 require 'thegamesdb/platforms'
 require 'net/http'
 require 'json'
@@ -10,6 +11,7 @@ module Gamesdb
   # Client for TheGamesDB API (thegamesdb.net)
   class Client
     include Gamesdb::Games
+    include Gamesdb::Genres
     include Gamesdb::Platforms
 
     BASE_URL = 'https://api.thegamesdb.net/v1/'
