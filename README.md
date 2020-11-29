@@ -19,6 +19,7 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
     * [Platforms](#platforms-1)
     * [Platforms/ByPlatformID](#platformsbyplatformid)
     * [Platforms/ByPlatformName](#platformsbyplatformname)
+    * [Platforms/Images](#platformsimages)
   * [Genres](#genres)
 * [RubyDoc](https://www.rubydoc.info/gems/thegamesdb)
 * [Development](#development)
@@ -296,7 +297,25 @@ Usage:
 ]
 ```
 
-- TODO: /Platforms/Images
+#### Platforms/Images
+
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Platforms/PlatformsImages)**
+
+Usage:
+```ruby
+> client.platform_images(7)
+ => [
+   {"id"=>22, "type"=>"banner", "filename"=>"platform/banners/7-1.png"}, 
+   {"id"=>38, "type"=>"fanart", "filename"=>"platform/fanart/7-1.jpg"}, 
+   {"id"=>39, "type"=>"fanart", "filename"=>"platform/fanart/7-2.jpg"}, 
+   {"id"=>60, "type"... 
+```
+
+Using a filter for type:
+```ruby
+ > client.platform_images(7, filter: 'boxart')
+ => [{"id"=>222, "type"=>"boxart", "filename"=>"platform/boxart/7-2.jpg"}]
+```
 
 ### Genres
 
