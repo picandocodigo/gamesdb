@@ -42,7 +42,7 @@ Or install it in your system with:
 
     $ gem install thegamesdb
 
-To use this library, you'll need to request an API Key [here](https://forums.thegamesdb.net/viewforum.php?f=10). Once you have an API KEY, you can instantiate a Client:
+To use this library, you'll need to request an API Key [here](https://forums.thegamesdb.net/viewforum.php?f=10). Once you have an API key, you can instantiate a Client:
 
 ```ruby
 > client = Gamesdb::Client.new('<API_KEY>')
@@ -112,15 +112,15 @@ Usage:
 ```ruby
 > client.games_by_name("Mario Kart")
  => [
-   {:id=>266, :game_title=>"Mario Kart 64", :release_date=>"1997-02-10", :platform=>3, :developers=>[6037]}, 
-   {:id=>47050, :game_title=>"Mario Kart 64", :release_date=>"2016-12-29", :platform=>38, :developers=>[6037]}, 
-   {:id=>55187, :game_title=>"Mario Kart 64 (VC)", :release_date=>"2007-01-29", :platform=>9, :developers=>[6041]}, 
-   {:id=>64547, :game_title=>"Mario Kart 64 [Not for Resale]", :release_date=>"1997-02-10", :platform=>3, :developers=>nil}, 
-   {:id=>12733, :game_title=>"Mario Kart 7", :release_date=>"2011-12-04", :platform=>4912, :developers=>[7160]}, 
-   {:id=>17444, :game_title=>"Mario Kart 8", :release_date=>"2014-05-30", :platform=>38, :developers=>[6037]}, 
-   {:id=>42294, :game_title=>"Mario Kart 8 Deluxe", :release_date=>"2017-04-28", :platform=>4971, :developers=>[6037]}, 
+   {:id=>266, :game_title=>"Mario Kart 64", :release_date=>"1997-02-10", :platform=>3, :developers=>[6037]},
+   {:id=>47050, :game_title=>"Mario Kart 64", :release_date=>"2016-12-29", :platform=>38, :developers=>[6037]},
+   {:id=>55187, :game_title=>"Mario Kart 64 (VC)", :release_date=>"2007-01-29", :platform=>9, :developers=>[6041]},
+   {:id=>64547, :game_title=>"Mario Kart 64 [Not for Resale]", :release_date=>"1997-02-10", :platform=>3, :developers=>nil},
+   {:id=>12733, :game_title=>"Mario Kart 7", :release_date=>"2011-12-04", :platform=>4912, :developers=>[7160]},
+   {:id=>17444, :game_title=>"Mario Kart 8", :release_date=>"2014-05-30", :platform=>38, :developers=>[6037]},
+   {:id=>42294, :game_title=>"Mario Kart 8 Deluxe", :release_date=>"2017-04-28", :platform=>4971, :developers=>[6037]},
    {:id=>10750, :game_title=>"Mario Kart Arcade GP", :release_date=>"2005-10-12", :platform=>23, :developers=>[5804]}, ...
- ] 
+ ]
 ```
 #### Games/ByPlatformID
 
@@ -132,16 +132,16 @@ Usage:
 ```ruby
 > client.games_by_platform_id(7)
  => [
-   {:name=>"Donkey Kong", :id=>5, :release_date=>"1982-01-01", :developers=>[6037]}, 
-   {:name=>"Bionic Commando", :id=>76, :release_date=>"1988-12-06", :developers=>[1436]}, 
-   {:name=>"Super Mario Bros. 3", :id=>112, :release_date=>"1990-02-12", :developers=>[6055]}, 
-   {:name=>"The Legend of Zelda", :id=>113, :release_date=>"1987-07-01", :developers=>[6055]}, 
-   {:name=>"Kirby's Adventure", :id=>121, :release_date=>"1993-03-26", :developers=>[3694]}, 
-   {:name=>"Metroid", :id=>123, :release_date=>"1987-08-15", :developers=>[6051]}, 
-   {:name=>"Mega Man 5", :id=>125, :release_date=>"1992-12-04", :developers=>[1436]}, 
-   {:name=>"Kid Icarus", :id=>130, :release_date=>"1986-12-18", :developers=>[6037]}, 
-   {:name=>"Lemmings", :id=>133, :release_date=>"1991-02-14", :developers=>[2404]}, 
-   {:name=>"Castlevania", :id=>135, :release_date=>"1987-05-01", :developers=>[4765]}, 
+   {:name=>"Donkey Kong", :id=>5, :release_date=>"1982-01-01", :developers=>[6037]},
+   {:name=>"Bionic Commando", :id=>76, :release_date=>"1988-12-06", :developers=>[1436]},
+   {:name=>"Super Mario Bros. 3", :id=>112, :release_date=>"1990-02-12", :developers=>[6055]},
+   {:name=>"The Legend of Zelda", :id=>113, :release_date=>"1987-07-01", :developers=>[6055]},
+   {:name=>"Kirby's Adventure", :id=>121, :release_date=>"1993-03-26", :developers=>[3694]},
+   {:name=>"Metroid", :id=>123, :release_date=>"1987-08-15", :developers=>[6051]},
+   {:name=>"Mega Man 5", :id=>125, :release_date=>"1992-12-04", :developers=>[1436]},
+   {:name=>"Kid Icarus", :id=>130, :release_date=>"1986-12-18", :developers=>[6037]},
+   {:name=>"Lemmings", :id=>133, :release_date=>"1991-02-14", :developers=>[2404]},
+   {:name=>"Castlevania", :id=>135, :release_date=>"1987-05-01", :developers=>[4765]},
    {:name=>"Super Mario Bros.", :id=>140, :release_date=>"1985-09-13", :developers=>[6042]}, ...
  ]
 ```
@@ -165,15 +165,15 @@ Usage:
    :base_url=>"https://cdn.thegamesdb.net/images/original/",
    :logo=>"clearlogo/121.png",
    :boxart=>{
-     :front=>{:url=>"boxart/front/121-1.jpg", :resolution=>"1536x2100", :width=>"1536", :height=>"2100"}, 
+     :front=>{:url=>"boxart/front/121-1.jpg", :resolution=>"1536x2100", :width=>"1536", :height=>"2100"},
      :back=>{:url=>"boxart/back/121-1.jpg", :resolution=>"1539x2100", :width=>"1539", :height=>"2100"}
    },
    :screenshot=>[
-     {:id=>104578, :type=>"screenshot", :side=>nil, :filename=>"screenshots/121-1.jpg", :resolution=>nil}, 
+     {:id=>104578, :type=>"screenshot", :side=>nil, :filename=>"screenshots/121-1.jpg", :resolution=>nil},
      {:id=>104580, :type=>"screenshot", :side=>nil, :filename=>"screenshots/121-2.jpg", :resolution=>nil}
    ],
    :fanart=>[
-     {:url=>"fanart/121-1.jpg", :resolution=>"1920x1080", :width=>"1920", :height=>"1080"}, 
+     {:url=>"fanart/121-1.jpg", :resolution=>"1920x1080", :width=>"1920", :height=>"1080"},
      {:url=>"fanart/121-2.jpg", :resolution=>"1920x1080", :width=>"1920", :height=>"1080"}
    ]
 }
@@ -228,7 +228,7 @@ Pages:
  }
 >next_page = client.games_update(1000, page: response[:next_page])
    => {:updates=> [
-        {"edit_id"=>11173, "game_id"=>48037, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]}, 
+        {"edit_id"=>11173, "game_id"=>48037, "timestamp"=>"2018-07-27 23:10:44", "type"=>"publishers", "value"=>[1044]},
         ],
         :previous_page=>100,
         :next_page=>102
@@ -282,7 +282,7 @@ Usage:
    :sound=>"Pulse Code Modulation",
    :maxcontrollers=>"2",
    :display=>"RGB",
-   :overview=>"The Nintendo Entertainment System (also abbreviated as NES or simply called Nintendo) is an 8-bit video game console that was released by Nintendo in North America during 1985, in Europe during 1986 and Australia in 1987. In most of Asia, including Japan (where it was first launched in 1983), China, Vietnam, Singapore, the Middle East and Hong Kong, it was released as the Family Computer, commonly shortened as either the romanized contraction Famicom, or abbreviated to FC. In South Korea, it was known as the Hyundai Comboy, and was distributed by Hynix which then was known as Hyundai Electronics.\r\n\r\nAs the best-selling gaming console of its time, the NES helped revitalize the US video game industry following the video game crash of 1983, and set the standard for subsequent consoles of its generation. With the NES, Nintendo introduced a now-standard business model of licensing third-party developers, authorizing them to produce and distribute software for Nintendo&#039;s platform.", 
+   :overview=>"The Nintendo Entertainment System (also abbreviated as NES or simply called Nintendo) is an 8-bit video game console that was released by Nintendo in North America during 1985, in Europe during 1986 and Australia in 1987. In most of Asia, including Japan (where it was first launched in 1983), China, Vietnam, Singapore, the Middle East and Hong Kong, it was released as the Family Computer, commonly shortened as either the romanized contraction Famicom, or abbreviated to FC. In South Korea, it was known as the Hyundai Comboy, and was distributed by Hynix which then was known as Hyundai Electronics.\r\n\r\nAs the best-selling gaming console of its time, the NES helped revitalize the US video game industry following the video game crash of 1983, and set the standard for subsequent consoles of its generation. With the NES, Nintendo introduced a now-standard business model of licensing third-party developers, authorizing them to produce and distribute software for Nintendo&#039;s platform.",
    :youtube=>nil
 }
 ```
@@ -311,10 +311,10 @@ Usage:
 ```ruby
 > client.platform_images(7)
  => [
-   {"id"=>22, "type"=>"banner", "filename"=>"platform/banners/7-1.png"}, 
-   {"id"=>38, "type"=>"fanart", "filename"=>"platform/fanart/7-1.jpg"}, 
-   {"id"=>39, "type"=>"fanart", "filename"=>"platform/fanart/7-2.jpg"}, 
-   {"id"=>60, "type"... 
+   {"id"=>22, "type"=>"banner", "filename"=>"platform/banners/7-1.png"},
+   {"id"=>38, "type"=>"fanart", "filename"=>"platform/fanart/7-1.jpg"},
+   {"id"=>39, "type"=>"fanart", "filename"=>"platform/fanart/7-2.jpg"},
+   {"id"=>60, "type"...
 ```
 
 Using a filter for type:
@@ -339,7 +339,7 @@ Usage:
   {"id"=>3, "name"=>"Construction and Management Simulation"},
   {"id"=>21, "name"=>"Education"},
   ...
-] 
+]
 
 ```
 
