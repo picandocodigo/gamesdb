@@ -75,7 +75,7 @@ module Gamesdb
     # comma delimited list)
     # @param page [Integer]
     #
-    # @return
+    # @return Array of Hashes
     def platform_images(platforms_id, args = {})
       url = 'Platforms/Images'
       args['filter[type]'] = args.delete(:type) if args[:type]
