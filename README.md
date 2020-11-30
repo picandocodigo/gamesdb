@@ -21,6 +21,7 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
     * [Platforms/ByPlatformName](#platformsbyplatformname)
     * [Platforms/Images](#platformsimages)
   * [Genres](#genres)
+  * [Developers](#developers)
 * [RubyDoc](https://www.rubydoc.info/gems/thegamesdb)
 * [Development](#development)
 * [Contributing](#contributing)
