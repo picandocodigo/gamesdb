@@ -5,6 +5,7 @@ require 'thegamesdb/developers'
 require 'thegamesdb/games'
 require 'thegamesdb/genres'
 require 'thegamesdb/platforms'
+require 'thegamesdb/publishers'
 require 'net/http'
 require 'json'
 
@@ -15,6 +16,7 @@ module Gamesdb
     include Gamesdb::Games
     include Gamesdb::Genres
     include Gamesdb::Platforms
+    include Gamesdb::Publishers
 
     BASE_URL = 'https://api.thegamesdb.net/v1/'
     IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'
