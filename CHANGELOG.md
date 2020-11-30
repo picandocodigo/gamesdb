@@ -2,16 +2,25 @@
 
 ## 2.0.0
 
-- Refactored code and functionality. The API support is the same as 1.2.0, but the library was refactored in a way you need to instantiate a client with the API KEY to use it.
+Refactored code and functionality. The library was refactored in a way you need to instantiate a client with the API key to use it (more info in "Breaking changes"). 100% of the documented API is now supported and implemented.
+
+The base API Response includes the `remaining_monthly_allowance` for your API key, `extra_allowance` and `allowance_refresh_timer`. These values are updated on the client instance on every request so you can use `client.remaining_monthly_client` to check how many requests the API key has left.
 
 ### New APIs
 
-- `platforms_by_name`
+- `developers`
 - `games_update`
+- `genres`
+- `platforms_by_name`
+- `platforms_images`
+- `publishers`
+
 
 ### Breaking changes:
 
-You now need to instantiate the Gamesdb::Client class passing in the api_key. E.g:
+- Dropped support for Ruby 2.4. The gem might still work on Ruby 2.4, but it's not being regularly tested for any version lower than 2.5.
+
+- You now need to instantiate the Gamesdb::Client class passing in the api_key. E.g:
 
 ```ruby
 > client = Gamesdb::Client.new(ENV['GAMESDB_API_KEY'])
@@ -22,7 +31,7 @@ You now need to instantiate the Gamesdb::Client class passing in the api_key. E.
 ...
 ```
 
-Changes in methods:
+- Changes in methods:
 
 - `platform_by_id` changes to `platforms_by_id`.
 - `game_by_id` changes to `games_by_id`.
