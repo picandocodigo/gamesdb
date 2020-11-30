@@ -21,6 +21,8 @@ module Gamesdb
     BASE_URL = 'https://api.thegamesdb.net/v1/'
     IMAGES_BASE_URL = 'https://legacy.thegamesdb.net/banners/'
 
+    attr_reader :remaining_monthly_allowance, :extra_allowance, :allowance_refresh_timer
+
     def initialize(api_key)
       @api_key = api_key
     end
@@ -39,14 +41,21 @@ module Gamesdb
       params = params.merge({ apikey: @api_key })
       uri = URI(BASE_URL + url)
       uri.query = URI.encode_www_form(params)
-      response = Net::HTTP.get_response(uri).body
-      JSON.parse(response)
+      response = JSON.parse(Net::HTTP.get_response(uri).body)
+      refresh_allowances(response)
+      response
     rescue StandardError => e
       # TODO: Handle errors
       raise e
     end
 
     private
+
+    def refresh_allowances(response)
+      @remaining_monthly_allowance = response['remaining_monthly_allowance']
+      @extra_allowance = response['extra_allowance']
+      @allowance_refresh_timer = response['allowance_refresh_timer']
+    end
 
     def process_logo(data, id)
       logo = data['images'][id.to_s].select { |a| a['type'] == 'clearlogo' }
