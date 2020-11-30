@@ -134,7 +134,7 @@ describe 'GamesDB - platforms', :vcr do
       @images = client.platform_images(7)
 
       expect(@images.count).must_equal(10)
-      expect(@images.first.keys).must_equal(%w[id type filename])
+      expect(@images.first.keys).must_equal(['id', 'type', 'filename'])
     end
 
     it 'should filter image type for a platform' do
