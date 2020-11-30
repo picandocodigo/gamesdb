@@ -22,6 +22,7 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
     * [Platforms/Images](#platformsimages)
   * [Genres](#genres)
   * [Developers](#developers)
+  * [Publishers](#publishers)
 * [RubyDoc](https://www.rubydoc.info/gems/thegamesdb)
 * [Development](#development)
 * [Contributing](#contributing)
@@ -362,7 +363,22 @@ Usage:
 
 ### Publishers
 
-- TODO: /Publishers
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Publishers/Publishers)**
+
+Usage:
+
+```ruby
+ > client.publishers
+   => [
+    {"id"=>2374, "name"=>".GEARS Studios"},
+    {"id"=>2090, "name"=>"1-Pup Games"},
+    {"id"=>4045, "name"=>"10 out of 10"},
+    {"id"=>5898, "name"=>"10Ants Hill"},
+    {"id"=>3542, "name"=>"10tons Ltd."},
+    {"id"=>1188, "name"=>"11 bit studios"},
+    ...
+   ]
+```
 
 ## Development
 
