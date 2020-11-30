@@ -3,7 +3,7 @@ A Ruby gem to interact with [TheGamesDB](http://thegamesdb.net) API.
 
 The Legacy API has been shutdown. The gem is now using the new API and you need to [request an API key](https://forums.thegamesdb.net/viewforum.php?f=10) to use it.
 
-[![Build Status](https://api.travis-ci.com/picandocodigo/gamesdb.svg?branch=master)](https://travis-ci.com/picandocodigo/gamesdb)
+![Build Status](https://github.com/picandocodigo/gamesdb/workflows/Tests/badge.svg?branch=master)
 [![Gem Version](https://badge.fury.io/rb/thegamesdb.svg)](https://badge.fury.io/rb/thegamesdb)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2dcf3cdcbe37adcea569/maintainability)](https://codeclimate.com/github/picandocodigo/gamesdb/maintainability)
 
