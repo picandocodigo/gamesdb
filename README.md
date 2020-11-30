@@ -34,7 +34,7 @@ This gem requires Ruby version 2.5 or more. Add this line to your application's 
 
     gem 'thegamesdb'
 
-And then run:
+And run:
 
     $ bundle install
 
@@ -48,6 +48,10 @@ To use this library, you'll need to request an API Key [here](https://forums.the
 > client = Gamesdb::Client.new('<API_KEY>')
 > response = client.platforms
 ```
+
+**API Key allowances**
+
+The base API Response includes the `remaining_monthly_allowance` for your API key, `extra_allowance` and `allowance_refresh_timer`. These values are updated on the client instance on every request so you can use `client.remaining_monthly_client` to check how many requests the API key has left.
 
 ## Usage
 
@@ -234,7 +238,7 @@ Pages:
 
 ### Platforms
 
-#### /Platforms
+#### Platforms
 
 - **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Platforms#platforms-instance_method)**
 - **[Swagger API Documentation](https://api.thegamesdb.net/#/Platforms/Platforms)**
