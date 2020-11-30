@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'thegamesdb/version'
+require 'thegamesdb/developers'
 require 'thegamesdb/games'
 require 'thegamesdb/genres'
 require 'thegamesdb/platforms'
@@ -10,6 +11,7 @@ require 'json'
 module Gamesdb
   # Client for TheGamesDB API (thegamesdb.net)
   class Client
+    include Gamesdb::Developers
     include Gamesdb::Games
     include Gamesdb::Genres
     include Gamesdb::Platforms

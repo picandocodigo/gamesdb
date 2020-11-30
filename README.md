@@ -322,6 +322,8 @@ Using a filter for type:
 - **[RubyDoc](https://www.rubydoc.info/github/picandocodigo/gamesdb/master/Gamesdb/Genres#genres-instance_method)**
 - **[Swagger API Documentation](https://api.thegamesdb.net/#/Genres/Genres)**
 
+Usage:
+
 ```ruby
 > client.genres
  => [
@@ -337,7 +339,25 @@ Using a filter for type:
 
 ### Developers
 
-- TODO: /Developers
+- **[Swagger API Documentation](https://api.thegamesdb.net/#/Developers/Developers)**
+
+Usage:
+
+```ruby
+> client.developers
+  => [
+   {"id"=>142, "name"=>"?"},
+   {"id"=>9916, "name"=>".dat"},
+   {"id"=>2, "name"=>".theprodukkt"},
+   {"id"=>9898, "name"=>"[adult swim] games"},
+   {"id"=>9899, "name"=>"[bracket]games"},
+   {"id"=>9900, "name"=>"[erka:es]"},
+   {"id"=>10472, "name"=>"[RON]"},
+   {"id"=>9901, "name"=>"][ Games Inc"},
+   {"id"=>145, "name"=>"@nifty"},
+   ...
+ ]
+```
 
 ### Publishers
 
