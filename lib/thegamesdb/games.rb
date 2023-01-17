@@ -41,9 +41,9 @@ module Gamesdb
       return [] if (data['data']['count']).zero?
 
       games = data['data']['games']
-      return symbolize_keys(games.first) if games.count == 1
+      return Gamesdb::Utils.symbolize_keys(games.first) if games.count == 1
 
-      games.map { |game| symbolize_keys(game) }
+      games.map { |game| Gamesdb::Utils.symbolize_keys(game) }
     end
     # rubocop:enable Metrics/MethodLength
 
@@ -95,10 +95,10 @@ module Gamesdb
 
       response = {}
       response[:base_url] = data['data']['base_url']['original']
-      response[:logo] = process_logo(data['data'], id)
-      response[:boxart] = process_covers(data['data'], id)
-      response[:screenshot] = process_screenshots(data['data'], id)
-      response[:fanart] = process_fanart(data['data'], id)
+      response[:logo] = Gamesdb::Utils.process_logo(data['data'], id)
+      response[:boxart] = Gamesdb::Utils.process_covers(data['data'], id)
+      response[:screenshot] = Gamesdb::Utils.process_screenshots(data['data'], id)
+      response[:fanart] = Gamesdb::Utils.process_fanart(data['data'], id)
       response
     end
 

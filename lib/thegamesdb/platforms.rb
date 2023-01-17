@@ -17,7 +17,7 @@ module Gamesdb
       data = perform_request(url, params)
 
       data['data']['platforms'].map do |p|
-        symbolize_keys(p.last)
+        Gamesdb::Utils.symbolize_keys(p.last)
       end
     end
 
@@ -93,9 +93,9 @@ module Gamesdb
 
       response = case platforms
                  when Hash
-                   platforms.map { |_k, platform| symbolize_keys(platform) }
+                   platforms.map { |_k, platform| Gamesdb::Utils.symbolize_keys(platform) }
                  when Array
-                   platforms.map { |platform| symbolize_keys(platform) }
+                   platforms.map { |platform| Gamesdb::Utils.symbolize_keys(platform) }
                  end
 
       return response.first if response.count == 1
