@@ -2,6 +2,7 @@
 
 require 'thegamesdb/version'
 require 'thegamesdb/developers'
+require 'thegamesdb/error'
 require 'thegamesdb/games'
 require 'thegamesdb/genres'
 require 'thegamesdb/platforms'
@@ -42,10 +43,11 @@ module Gamesdb
       uri = URI(BASE_URL + url)
       uri.query = URI.encode_www_form(params)
       response = JSON.parse(Net::HTTP.get_response(uri).body)
+      http_error(response) if response['code'] >= 300
+
       refresh_allowances(response)
       response
     rescue StandardError => e
-      # TODO: Handle errors
       raise e
     end
 
@@ -55,6 +57,11 @@ module Gamesdb
       @remaining_monthly_allowance = response['remaining_monthly_allowance']
       @extra_allowance = response['extra_allowance']
       @allowance_refresh_timer = response['allowance_refresh_timer']
+    end
+
+    # TODO: More granular errors
+    def http_error(response)
+      raise Gamesdb::Error.new(response['code'], response['status'])
     end
 
     def process_logo(data, id)

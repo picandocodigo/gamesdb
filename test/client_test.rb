@@ -12,5 +12,15 @@ describe 'Gamesdb - client', :vcr do
       client.games_by_id(1527)
       expect(client.remaining_monthly_allowance).must_equal(monthly - 1)
     end
+
+    describe 'errors' do
+      let(:client) { Gamesdb::Client.new('invalid_api_key') }
+
+      it 'should raise http error' do
+        assert_raises Gamesdb::Error do
+          client.games_by_id(1904)
+        end
+      end
+    end
   end
 end
