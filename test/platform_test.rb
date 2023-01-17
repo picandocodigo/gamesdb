@@ -12,7 +12,7 @@ describe 'GamesDB - platforms', :vcr do
 
     it 'should get gaming platforms' do
       expect(@platforms.count).wont_be :<, 0
-      expect(@platforms.count).must_equal 114
+      expect(@platforms.count).must_equal 147
     end
 
     it 'should have a valid name' do
@@ -71,7 +71,7 @@ describe 'GamesDB - platforms', :vcr do
 
     it 'supports comma separated list' do
       expect(@games1.count).must_equal 20
-      expect(@games2.count).must_equal 1
+      expect(@games2.count).must_equal 20
       expect(@games3.count).must_equal 20
 
       expect(@games3 - @games1).must_equal @games2
