@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+Now testing Ruby versions 3.0, 3.1, 3.2, JRuby and TruffleRuby.
+
+Added some better error handling. Now you can catch from `Gamesdb::Error` if there's any response from the server whose status is >= 300 (e.g. 403 for wrong API Key). I'll improve on this in future releases.
+
 ## 2.0.0
 
 Refactored code and functionality. The library was refactored in a way you need to instantiate a client with the API key to use it (more info in "Breaking changes"). 100% of the documented API is now supported and implemented.
