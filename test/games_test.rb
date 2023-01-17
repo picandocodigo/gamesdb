@@ -137,7 +137,7 @@ describe 'Gamesdb - games', :vcr do
           {
             'edit_id' => 2,
             'game_id' => 38_113,
-            'timestamp' => '2018-06-28 16:20:54',
+            'timestamp' => '2018-06-28 15:20:54',
             'type' => 'boxart',
             'value' => 'boxart/front/38113-1.jpg'
           }
@@ -146,7 +146,7 @@ describe 'Gamesdb - games', :vcr do
           {
             'edit_id' => 101,
             'game_id' => 22_208,
-            'timestamp' => '2018-06-29 02:36:38',
+            'timestamp' => '2018-06-29 01:36:38',
             'type' => 'rating',
             'value' => 'E - Everyone'
           }
