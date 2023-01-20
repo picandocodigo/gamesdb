@@ -87,13 +87,13 @@ module Gamesdb
           youtube: elem['youtube'],
           alternates: elem['alternates'],
           image: if (boxart = data.dig('include', 'boxart', 'data', elem['id'].to_s))
-          data['include']['boxart']['base_url']['original'] +
-            boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
-        end
-      }
+                   data['include']['boxart']['base_url']['original'] +
+                     boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
+                 end
+        }
+      end
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-end
 end
