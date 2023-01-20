@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Small update to error handling. Catches `Net::HTTP` errors such as 503 Service Unavailable and raises `Gamesdb::Error`.
+
 ## 2.1.0
 
 Now testing Ruby versions 3.0, 3.1, 3.2, JRuby and TruffleRuby.
