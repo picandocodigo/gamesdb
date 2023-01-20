@@ -40,13 +40,10 @@ module Gamesdb
     def perform_request(url, params = {})
       raise ArgumentError, 'You need to set the API KEY to use the GamesDB API' unless @api_key
 
-      params = params.merge({ apikey: @api_key })
-      uri = URI(BASE_URL + url)
-      uri.query = URI.encode_www_form(params)
+      uri = prepare_uri(params, url)
       response = Net::HTTP.get_response(uri)
-      http_error(response)
+      check_http_errors(response)
       json_response = JSON.parse(response.body)
-
       refresh_allowances(json_response)
       json_response
     rescue StandardError => e
@@ -55,6 +52,13 @@ module Gamesdb
 
     private
 
+    def prepare_uri(params, url)
+      params = params.merge({ apikey: @api_key })
+      uri = URI(BASE_URL + url)
+      uri.query = URI.encode_www_form(params)
+      uri
+    end
+
     def refresh_allowances(response)
       @remaining_monthly_allowance = response['remaining_monthly_allowance']
       @extra_allowance = response['extra_allowance']
@@ -62,7 +66,7 @@ module Gamesdb
     end
 
     # TODO: More granular errors
-    def http_error(response)
+    def check_http_errors(response)
       raise Gamesdb::Error.new(response.code, response.message) if response.code.to_i >= 300
     end
 
