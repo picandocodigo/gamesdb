@@ -23,6 +23,7 @@ The Legacy API has been shutdown. The gem is now using the new API and you need 
   * [Genres](#genres)
   * [Developers](#developers)
   * [Publishers](#publishers)
+  * [Error Handling](#error-handling)
 * [RubyDoc](https://www.rubydoc.info/gems/thegamesdb)
 * [Development](#development)
 * [Contributing](#contributing)
@@ -383,6 +384,10 @@ Usage:
     ...
    ]
 ```
+
+### Error Handling
+
+If there's an error from the API (e.g. 401) or `Net::HTTP` (e.g. 503 - Service Unavailable), the client will raise a `Gamesdb::Error` with the status code and message.
 
 ## Development
 
