@@ -43,11 +43,12 @@ module Gamesdb
       params = params.merge({ apikey: @api_key })
       uri = URI(BASE_URL + url)
       uri.query = URI.encode_www_form(params)
-      response = JSON.parse(Net::HTTP.get_response(uri).body)
-      http_error(response) if response['code'] >= 300
+      response = Net::HTTP.get_response(uri)
+      http_error(response)
+      json_response = JSON.parse(response.body)
 
-      refresh_allowances(response)
-      response
+      refresh_allowances(json_response)
+      json_response
     rescue StandardError => e
       raise e
     end
@@ -62,7 +63,7 @@ module Gamesdb
 
     # TODO: More granular errors
     def http_error(response)
-      raise Gamesdb::Error.new(response['code'], response['status'])
+      raise Gamesdb::Error.new(response.code, response.message) if response.code.to_i >= 300
     end
 
     # Process games for platform_games
@@ -86,13 +87,13 @@ module Gamesdb
           youtube: elem['youtube'],
           alternates: elem['alternates'],
           image: if (boxart = data.dig('include', 'boxart', 'data', elem['id'].to_s))
-                   data['include']['boxart']['base_url']['original'] +
-                     boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
-                 end
-        }
-      end
+          data['include']['boxart']['base_url']['original'] +
+            boxart.select { |a| a['side'] == 'front' }.first['filename'] || ''
+        end
+      }
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+end
 end
