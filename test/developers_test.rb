@@ -7,10 +7,12 @@ describe 'Gamesdb - developers', :vcr do
 
   describe 'developers' do
     it 'should return the developers' do
-      @developers = client.developers
+      VCR.use_cassette('developers') do
+        @developers = client.developers
 
-      expect(@developers.count.positive?)
-      expect(@developers.first.keys).must_equal(['id', 'name'])
+        expect(@developers.count.positive?)
+        expect(@developers.first.keys).must_equal(['id', 'name'])
+      end
     end
   end
 end
