@@ -7,7 +7,9 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'game' do
     before do
-      @game = client.games_by_id(109)
+      VCR.use_cassette('games test: games_by_id') do
+        @game = client.games_by_id(109)
+      end
     end
 
     it 'should have a valid id' do
@@ -23,17 +25,21 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'game by several ids' do
     it 'should return games for a String of ids' do
-      @games = client.games_by_id('109,108').sort_by { |g| g[:id] }
+      VCR.use_cassette('games test: string of ids') do
+        @games = client.games_by_id('109,108').sort_by { |g| g[:id] }
 
-      expect(@games.count).must_equal 2
-      expect(@games.first[:id]).must_equal 108
-      expect(@games.last[:id]).must_equal 109
+        expect(@games.count).must_equal 2
+        expect(@games.first[:id]).must_equal 108
+        expect(@games.last[:id]).must_equal 109
+      end
     end
   end
 
   describe 'empty game' do
     before do
-      @game = client.games_by_id(3)
+      VCR.use_cassette('empty_game') do
+        @game = client.games_by_id(3)
+      end
     end
 
     it 'should return an empty array' do
@@ -43,7 +49,9 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'games by name' do
     before do
-      @games_list = client.games_by_name('turrican')
+      VCR.use_cassette('games by name') do
+        @games_list = client.games_by_name('turrican')
+      end
     end
 
     it 'should return a list' do
@@ -57,8 +65,10 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'games by name pages' do
     before do
-      @first_page = client.games_by_name('mario', page: 1)
-      @second_page = client.games_by_name('mario', page: 2)
+      VCR.use_cassette('pages') do
+        @first_page = client.games_by_name('mario', page: 1)
+        @second_page = client.games_by_name('mario', page: 2)
+      end
     end
 
     it 'should return games in platform by id' do
@@ -75,7 +85,9 @@ describe 'Gamesdb - games', :vcr do
 
   describe 'games by name and platform' do
     before do
-      @games_list = client.games_by_name('mario', platform: 7)
+      VCR.use_cassette('games by name and platform') do
+        @games_list = client.games_by_name('mario', platform: 7)
+      end
     end
 
     it 'should return a list' do
@@ -91,7 +103,9 @@ describe 'Gamesdb - games', :vcr do
   describe 'games art', :vcr do
     describe 'when most of the art is available' do
       before do
-        @images = client.games_images('218')
+        VCR.use_cassette('games art') do
+          @images = client.games_images('218')
+        end
       end
 
       it 'should return logo and boxart' do
@@ -120,7 +134,9 @@ describe 'Gamesdb - games', :vcr do
 
     describe 'when some art is missing' do
       before do
-        @images = client.games_images(65_238)
+        VCR.use_cassette('games missing art') do
+          @images = client.games_images(65_238)
+        end
       end
 
       it 'should return an empty array' do
@@ -130,37 +146,41 @@ describe 'Gamesdb - games', :vcr do
 
     describe 'update games' do
       it 'should return updates' do
-        updates = client.games_update(1)
+        VCR.use_cassette('game updates') do
+          updates = client.games_update(1)
 
-        expect(updates[:updates].count).must_equal 100
-        expect(updates[:updates].first).must_equal(
-          {
-            'edit_id' => 2,
-            'game_id' => 38_113,
-            'timestamp' => '2018-06-28 15:20:54',
-            'type' => 'boxart',
-            'value' => 'boxart/front/38113-1.jpg'
-          }
-        )
-        expect(updates[:updates].last).must_equal(
-          {
-            'edit_id' => 101,
-            'game_id' => 22_208,
-            'timestamp' => '2018-06-29 01:36:38',
-            'type' => 'rating',
-            'value' => 'E - Everyone'
-          }
-        )
-        expect(updates[:previous_page]).must_be_nil
-        expect(updates[:next_page]).must_equal 2
+          expect(updates[:updates].count).must_equal 100
+          expect(updates[:updates].first).must_equal(
+            {
+              'edit_id' => 2,
+              'game_id' => 38_113,
+              'timestamp' => '2018-06-28 15:20:54',
+              'type' => 'boxart',
+              'value' => 'boxart/front/38113-1.jpg'
+            }
+          )
+          expect(updates[:updates].last).must_equal(
+            {
+              'edit_id' => 101,
+              'game_id' => 22_208,
+              'timestamp' => '2018-06-29 01:36:38',
+              'type' => 'rating',
+              'value' => 'E - Everyone'
+            }
+          )
+          expect(updates[:previous_page]).must_be_nil
+          expect(updates[:next_page]).must_equal 2
+        end
       end
 
       it 'should return updates when using a page parameter' do
-        updates = client.games_update(1, { page: 1_000 })
+        VCR.use_cassette('games updates paging') do
+          updates = client.games_update(1, { page: 1_000 })
 
-        expect(updates[:updates].count).must_equal 100
-        expect(updates[:previous_page]).must_equal 999
-        expect(updates[:next_page]).must_equal 1001
+          expect(updates[:updates].count).must_equal 100
+          expect(updates[:previous_page]).must_equal 999
+          expect(updates[:next_page]).must_equal 1001
+        end
       end
     end
   end

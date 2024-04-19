@@ -7,12 +7,14 @@ describe 'GamesDB - platforms', :vcr do
 
   describe 'platforms' do
     before do
-      @platforms = client.platforms
+      VCR.use_cassette('platforms') do
+        @platforms = client.platforms
+      end
     end
 
     it 'should get gaming platforms' do
       expect(@platforms.count).wont_be :<, 0
-      expect(@platforms.count).must_equal 147
+      expect(@platforms.count).must_equal 150
     end
 
     it 'should have a valid name' do
@@ -45,9 +47,11 @@ describe 'GamesDB - platforms', :vcr do
 
   describe 'games by platform' do
     before do
-      platforms = client.platforms
-      @first_page = client.games_by_platform_id(platforms[0][:id])
-      @second_page = client.games_by_platform_id(platforms[0][:id], 2)
+      VCR.use_cassette('games by platform') do
+        platforms = client.platforms
+        @first_page = client.games_by_platform_id(platforms[0][:id])
+        @second_page = client.games_by_platform_id(platforms[0][:id], 2)
+      end
     end
 
     it 'should return games in platform by id' do
@@ -64,9 +68,11 @@ describe 'GamesDB - platforms', :vcr do
 
   describe 'games by platform parameters' do
     before do
-      @games1 = client.games_by_platform_id(4950)
-      @games2 = client.games_by_platform_id(4948)
-      @games3 = client.games_by_platform_id('4950,4948')
+      VCR.use_cassette('games by platform parameters') do
+        @games1 = client.games_by_platform_id(4950)
+        @games2 = client.games_by_platform_id(4948)
+        @games3 = client.games_by_platform_id('4950,4948')
+      end
     end
 
     it 'supports comma separated list' do
@@ -81,7 +87,9 @@ describe 'GamesDB - platforms', :vcr do
   describe 'platform' do
     describe 'assigning basic info' do
       before do
-        @platform = client.platforms_by_id(6)
+        VCR.use_cassette('platform basic info') do
+          @platform = client.platforms_by_id(6)
+        end
       end
 
       it 'should return valid platform info' do
@@ -98,7 +106,9 @@ describe 'GamesDB - platforms', :vcr do
 
     describe 'without hardware or images' do
       before do
-        @platform = client.platforms_by_id(4916)
+        VCR.use_cassette('platform without hardware images') do
+          @platform = client.platforms_by_id(4916)
+        end
       end
 
       it 'should return valid platform info' do
@@ -116,32 +126,38 @@ describe 'GamesDB - platforms', :vcr do
 
   describe 'platforms by name' do
     it 'should return platforms' do
-      @platforms = client.platforms_by_name('Nintendo')
+      VCR.use_cassette('platforms by name') do
+        @platforms = client.platforms_by_name('Nintendo')
 
-      expect(@platforms.count).must_equal 14
-      names = @platforms.sort_by { |p| p[:name] }.map { |p| p[:name] }
-      expect(names).must_equal [
-        'Nintendo 3DS', 'Nintendo 64', 'Nintendo DS', 'Nintendo Entertainment System (NES)',
-        'Nintendo Game Boy', 'Nintendo Game Boy Advance', 'Nintendo Game Boy Color', 'Nintendo GameCube',
-        'Nintendo Pokémon Mini', 'Nintendo Switch', 'Nintendo Virtual Boy', 'Nintendo Wii', 'Nintendo Wii U',
-        'Super Nintendo (SNES)'
-      ]
+        expect(@platforms.count).must_equal 14
+        names = @platforms.sort_by { |p| p[:name] }.map { |p| p[:name] }
+        expect(names).must_equal [
+          'Nintendo 3DS', 'Nintendo 64', 'Nintendo DS', 'Nintendo Entertainment System (NES)',
+          'Nintendo Game Boy', 'Nintendo Game Boy Advance', 'Nintendo Game Boy Color', 'Nintendo GameCube',
+          'Nintendo Pokémon Mini', 'Nintendo Switch', 'Nintendo Virtual Boy', 'Nintendo Wii', 'Nintendo Wii U',
+          'Super Nintendo (SNES)'
+        ]
+      end
     end
   end
 
   describe 'platform images' do
     it 'should return all images for a platform' do
-      @images = client.platform_images(7)
+      VCR.use_cassette('all images platform') do
+        @images = client.platform_images(7)
 
-      expect(@images.count).must_equal(10)
-      expect(@images.first.keys).must_equal(['id', 'type', 'filename'])
+        expect(@images.count).must_equal(10)
+        expect(@images.first.keys).must_equal(['id', 'type', 'filename'])
+      end
     end
 
     it 'should filter image type for a platform' do
-      @images = client.platform_images(7, type: 'boxart')
+      VCR.use_cassette('filter image type platform') do
+        @images = client.platform_images(7, type: 'boxart')
 
-      expect(@images.count).must_equal(1)
-      expect(@images.first).must_equal({ 'id' => 222, 'type' => 'boxart', 'filename' => 'platform/boxart/7-2.jpg' })
+        expect(@images.count).must_equal(1)
+        expect(@images.first).must_equal({ 'id' => 222, 'type' => 'boxart', 'filename' => 'platform/boxart/7-2.jpg' })
+      end
     end
   end
 end

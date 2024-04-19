@@ -7,10 +7,12 @@ describe 'GamesDB - Publishers', :vcr do
 
   describe 'publishers' do
     it 'should return publishers' do
-      publishers = client.publishers
+      VCR.use_cassette('publishers') do
+        publishers = client.publishers
 
-      expect(publishers.count.positive?)
-      expect(publishers.first.keys).must_equal(['id', 'name'])
+        expect(publishers.count.positive?)
+        expect(publishers.first.keys).must_equal(['id', 'name'])
+      end
     end
   end
 end
